@@ -48,14 +48,16 @@
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('assets/') ?>js/sb-admin-2.min.js" type="text/javascript"></script>
 <!-- Page level plugins -->
-<script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+<script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.min.js" defer type="text/javascript"></script>
+<script src="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.min.js" defer type="text/javascript"></script>
+<!-- <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script> -->
 
 <!-- Page level custom scripts -->
-<script src="<?= base_url('assets/') ?>js/demo/datatables-demo.js" type="text/javascript"></script>
+<script src="<?= base_url('assets/') ?>js/demo/datatables-demo.js"></script>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script type="text/javascript" charset="utf8" src="<?= base_url('assets/') ?>js/jquery.dataTables.js"></script> -->
 <!-- <script src="<?= base_url('assets/') ?>js/jquery-3.6.0.min.js"></script> -->
 
 <script>
