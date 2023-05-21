@@ -55,11 +55,15 @@ class M_menu extends CI_Model
     public function save_menu()
     {
         $data = $this->input->post();
+        $data['created_at'] =   date('Y-m-d H:i:s');
+        $data['created_by'] = $this->session->userdata('username');
         $this->db->insert('menu', $data);
     }
     public function update_menu()
     {
         $data = $this->input->post();
+        $data['updated_at'] =   date('Y-m-d H:i:s');
+        $data['updated_by'] = $this->session->userdata('username');
         $this->db->where('menu_id', $data['menu_id'])->update('menu', $data);
     }
     public function deleteMenuById($id)
