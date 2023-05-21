@@ -55,6 +55,7 @@ class M_menu extends CI_Model
     public function save_menu()
     {
         $data = $this->input->post();
+        $data['icon'] = 'fas';
         $data['created_at'] =   date('Y-m-d H:i:s');
         $data['created_by'] = $this->session->userdata('username');
         $this->db->insert('menu', $data);
