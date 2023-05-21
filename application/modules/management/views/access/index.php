@@ -35,11 +35,8 @@
                                             <li class="fa <?= ($m['is_active'] == '1' ? 'fa-check-circle text-success' : 'fa-minus-circle text-danger') ?>"></li>
                                         </td>
                                         <td class="text-center" scope="col">
-                                            <?php if (@$m['role_id'] == 1) : ?>
-                                                <span class="badge badge-danger">not action</span>
-                                            <?php else : ?>
-                                                <a class="btn btn-warning btn-circle btn-sm " href="<?= site_url($menu['url'] . '/form/' . $m['role_id']) ?>"><i class="fas fa-cog"></i></a>
-                                            <?php endif; ?>
+                                            <a class="btn btn-warning btn-circle btn-sm " href="<?= site_url($menu['url'] . '/form/' . $m['role_id']) ?>"><i class="fas fa-cog"></i></a>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
