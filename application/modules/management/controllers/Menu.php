@@ -23,23 +23,82 @@ class Menu extends MY_Controller
 	}
 	public function index()
 	{
-		// $this->authorize($this->nav, '_view');
-		//cookie
-		// $this->cookie['cur_page'] = $this->uri->segment(4, 0);
-		// $this->cookie['total_rows'] = $this->m_nav->all_rows($this->cookie);
-		// set_cookie_nav($this->nav_id, $this->cookie);
 		// //main data
 		$data['menu'] = $this->menu;
 		// $data['cookie'] = $this->cookie;
 		$data['main'] = $this->m_menu->list_data($this->cookie);
+		$data['parent'] = $this->m_menu->get_menu();
 		// echo  "<pre>";
-		// var_dump($data['main']);
+		// var_dump($data['parent']);
 		// die;
-		// $data['pagination_info'] = pagination_info(count($data['main']), $this->cookie);
-		// //set pagination
-		// set_pagination($this->nav, $this->cookie);
-		// //render
-		// create_log('_view', $this->nav_id);
 		$this->render('menu/index', $data);
+	}
+	public function saveMenu()
+	{
+		// $this->form_validation->set_rules('parent_id', 'parent_id', 'required');
+		$this->form_validation->set_rules('menu_id', 'Menu Id', 'required');
+		$this->form_validation->set_rules('menu_nm', 'Nama Menu', 'required');
+		$this->form_validation->set_rules('url', 'Nama Url', 'required');
+
+		if ($this->form_validation->run()) {
+			$data = [
+				'success' => 1,
+
+			];
+			// save data
+			$this->m_menu->save_menu();
+			// mengembalikan dalam bentuk json
+			echo json_encode($data);
+		} else {
+			// validasi 
+			$data = [
+				'error' => true,
+				// 'parent_id_error' => form_error('parent_id'),
+				'menu_id_error' => form_error('menu_id'),
+				'menu_nm_error' => form_error('menu_nm'),
+				'url_error' => form_error('url'),
+
+			];
+			echo json_encode($data);
+		}
+	}
+	public function getMenuById($id)
+	{
+		$data = $this->m_menu->getMenuById($id);
+		echo json_encode($data);
+	}
+	public function updateMenu()
+	{
+		// $this->form_validation->set_rules('parent_id', 'parent_id', 'required');
+		$this->form_validation->set_rules('menu_id', 'Menu Id', 'required');
+		$this->form_validation->set_rules('menu_nm', 'Nama Menu', 'required');
+		$this->form_validation->set_rules('url', 'Nama Url', 'required');
+
+		if ($this->form_validation->run()) {
+			$data = [
+				'success' => 1,
+
+			];
+			// save data
+			$this->m_menu->update_menu();
+			// mengembalikan dalam bentuk json
+			echo json_encode($data);
+		} else {
+			// validasi 
+			$data = [
+				'error' => true,
+				// 'parent_id_error' => form_error('parent_id'),
+				'menu_id_error' => form_error('menu_id'),
+				'menu_nm_error' => form_error('menu_nm'),
+				'url_error' => form_error('url'),
+
+			];
+			echo json_encode($data);
+		}
+	}
+	public function deleteMenu($id)
+	{
+		$data = $this->m_menu->deleteMenuById($id);
+		echo json_encode($data);
 	}
 }

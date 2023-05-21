@@ -37,7 +37,8 @@
         </div>
     </div>
 </div>
-
+<script src="<?= base_url() ?>assets/sweetalert2/sweetalert2.min.js"></script>
+<script src="<?= base_url() ?>assets/jquery-toast/jquery.toast.min.js"></script>
 <!-- Bootstrap core JavaScript-->
 <script src="<?= base_url('assets/') ?>vendor/jquery/jquery.min.js" type="text/javascript"></script>
 <script src="<?= base_url('assets/') ?>vendor/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
@@ -57,6 +58,7 @@
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <!-- <script type="text/javascript" charset="utf8" src="<?= base_url('assets/') ?>js/jquery.dataTables.js"></script> -->
 <!-- <script src="<?= base_url('assets/') ?>js/jquery-3.6.0.min.js"></script> -->
 

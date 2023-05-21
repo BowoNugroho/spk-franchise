@@ -35,4 +35,36 @@ class M_menu extends CI_Model
         $query = $this->db->query($sql);
         return $query->result_array();
     }
+
+    public function get_menu()
+    {
+        $sql = "SELECT a.* 
+                FROM menu a ";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    public function getMenuById($id = '')
+    {
+        $sql = "SELECT a.* 
+                FROM menu a 
+                WHERE a.menu_id = $id ";
+        $query = $this->db->query($sql);
+        return $query->row_array();
+    }
+
+    public function save_menu()
+    {
+        $data = $this->input->post();
+        $this->db->insert('menu', $data);
+    }
+    public function update_menu()
+    {
+        $data = $this->input->post();
+        $this->db->where('menu_id', $data['menu_id'])->update('menu', $data);
+    }
+    public function deleteMenuById($id)
+    {
+        $this->db->where('menu_id', $id);
+        $this->db->delete('menu');
+    }
 }
