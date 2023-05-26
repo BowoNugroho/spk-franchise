@@ -51,6 +51,7 @@
 <!-- Page level plugins -->
 <script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.min.js" defer type="text/javascript"></script>
 <script src="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.min.js" defer type="text/javascript"></script>
+<script src="<?= base_url('assets/') ?>plugins/jquery-toast/jquery.toast.min.js" defer></script>
 <!-- <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script> -->
 
 <!-- Page level custom scripts -->
@@ -70,22 +71,22 @@
 
 
 
-    $('.form-check-input').on('click', function() {
-        const menuId = $(this).data('menu');
-        const roleId = $(this).data('role');
+    // $('.form-check-input').on('click', function() {
+    //     const menuId = $(this).data('menu');
+    //     const roleId = $(this).data('role');
 
-        $.ajax({
-            url: "<?= base_url('admin/changeaccess') ?>",
-            type: 'post',
-            data: {
-                menuId: menuId,
-                roleId: roleId,
-            },
-            success: function() {
-                document.location.href = " <?= base_url('admin/roleaccess/'); ?>" + roleId;
-            }
-        })
-    });
+    //     $.ajax({
+    //         url: "<?= base_url('admin/changeaccess') ?>",
+    //         type: 'post',
+    //         data: {
+    //             menuId: menuId,
+    //             roleId: roleId,
+    //         },
+    //         success: function() {
+    //             document.location.href = " <?= base_url('admin/roleaccess/'); ?>" + roleId;
+    //         }
+    //     })
+    // });
 </script>
 
 </body>

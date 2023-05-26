@@ -22,6 +22,8 @@
     <link href="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url() ?>assets/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/jquery-toast/jquery-toast.min.css">
+
 
 </head>
 

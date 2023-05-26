@@ -34,7 +34,12 @@ class Access extends MY_Controller
     {
         $data['menu'] = $this->menu;
         $data['main'] = $this->m_access->get_data_menu($id);
+        $data['role'] = $id;
         $this->render('access/form', $data);
+    }
+    public function changeAccess()
+    {
+        $this->m_access->save_change_access();
     }
     public function saveRole()
     {

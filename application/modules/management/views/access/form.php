@@ -9,6 +9,8 @@
             <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
             <?= $this->session->flashdata('message'); ?>
             <span id="success_message"></span>
+            <a href="<?= site_url($menu['url']); ?>/index" class="btn btn-primary mb-3"><i class="fa  fa-arrow-circle-left" aria-hidden="true"></i> Kembali</a>
+
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -40,7 +42,7 @@
                                             <?php endif; ?>
                                         </td>
                                         <td class="text-center" scope="col">
-                                            <input type="checkbox" aria-label="Checkbox for following text input">
+                                            <input type="checkbox" class="form-check-input cb_detail_<?= point_to_under($m['menu_id']) ?>" name="cb_view[<?= point_to_under($m['menu_id']) ?>]" onclick="cb_access('<?= $m['menu_id'] ?>')" value="1" <?php if ($m['_view'] == '1') echo 'checked'; ?>>
                                         </td>
                                     <?php endforeach; ?>
                             </tbody>
@@ -56,3 +58,31 @@
 
 </div>
 <!-- End of Main Content -->
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    function cb_access(id) {
+        var menu_id = id;
+        var role_id = <?= ($role) ?>;
+        // console.log(menu_id);
+        // console.log(role_id);
+        $.ajax({
+            url: '<?= site_url($menu['url']); ?>/changeAccess',
+            type: 'post',
+            data: {
+                menu_id: menu_id,
+                role_id: role_id,
+            },
+            success: function() {
+                $.toast({
+                    heading: 'Sukses',
+                    text: 'Berhasil disimpan.',
+                    icon: 'success',
+                    position: 'top-right'
+                })
+                // document.location.href = '<?= site_url($menu['url']); ?>/form/' + role_id;
+            }
+        })
+    }
+</script>
