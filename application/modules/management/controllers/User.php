@@ -18,7 +18,7 @@ class User extends MY_Controller
 
         //cookie
         $this->cookie = getCookieMenu($this->menu_id);
-        if ($this->cookie['search'] == null) $this->cookie['search'] = array('term' => '', 'user_nm' => '');
+        if ($this->cookie['search'] == null) $this->cookie['search'] = array('term' => '', 'user_nm add ' => '');
         if ($this->cookie['order'] == null) $this->cookie['order'] = array('field' => 'role_id', 'type' => 'asc');
         if ($this->cookie['per_page'] == null) $this->cookie['per_page'] = 1000;
         if ($this->cookie['cur_page'] == null) $this->cookie['cur_page'] = 0;
