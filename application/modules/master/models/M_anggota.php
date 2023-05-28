@@ -9,7 +9,7 @@ class M_anggota extends CI_Model
     public function list_data()
     {
         $sql = "SELECT a.* 
-        FROM anggota a ";
+        FROM mst_anggota a ";
         $query = $this->db->query($sql,);
         return $query->result_array();
     }
@@ -30,17 +30,17 @@ class M_anggota extends CI_Model
             }
             $data['created_at'] = date('Y-m-d H:i:s');
             $data['created_by'] = $this->session->userdata('username');
-            $this->db->insert('anggota', $data);
+            $this->db->insert('mst_anggota', $data);
         } else {
             $data['updated_at'] = date('Y-m-d H:i:s');
             $data['updated_by'] = $this->session->userdata('username');
-            $this->db->where('anggota_id', $data['anggota_id'])->update('anggota', $data);
+            $this->db->where('anggota_id', $data['anggota_id'])->update('mst_anggota', $data);
         }
     }
     public function getAnggotaById($id = '')
     {
         $sql = "SELECT a.* 
-                FROM anggota a 
+                FROM mst_anggota a 
                 WHERE a.anggota_id = $id ";
         $query = $this->db->query($sql);
         return $query->row_array();
@@ -48,6 +48,6 @@ class M_anggota extends CI_Model
     public function deleteAnggotaById($id)
     {
         $this->db->where('anggota_id', $id);
-        $this->db->delete('anggota');
+        $this->db->delete('mst_anggota');
     }
 }
