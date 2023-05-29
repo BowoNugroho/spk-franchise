@@ -27,18 +27,20 @@ class Pengurus extends MY_Controller
         //main data
         $data['menu'] = $this->menu;
         $data['main'] = $this->m_pengurus->list_data();
-        $data['user'] = $this->m_pengurus->get_user();
+        // $data['user'] = $this->m_pengurus->get_user();
         // echo "<pre>";
         // var_dump($data['user']);
         // die;
         $data['anggota'] = $this->m_pengurus->get_anggota();
         $this->render('pengurus/index', $data);
     }
-    public function saveAnggota()
+    public function savePengurus()
     {
-        $this->form_validation->set_rules('anggota_nm', 'Nama Anggota', 'required');
-        $this->form_validation->set_rules('no_rumah', 'No Rumah', 'required');
-        $this->form_validation->set_rules('no_tlp', 'Nomor Telepon', 'required');
+        $this->form_validation->set_rules('anggota_id', 'Nama Anggota', 'required');
+        $this->form_validation->set_rules('jabatan', 'Jabatan', 'required');
+        $this->form_validation->set_rules('masa_jabatan', 'Masa Jabatan', 'required');
+        $this->form_validation->set_rules('tgl_awal_jabatan', 'Tanggal Awal Jabatan', 'required');
+        $this->form_validation->set_rules('tgl_akhir_jabatan', 'Tanggal Akhir Jabatan', 'required');
 
         if ($this->form_validation->run()) {
             $data = [
@@ -46,31 +48,35 @@ class Pengurus extends MY_Controller
 
             ];
             // save data
-            $this->m_pengurus->save_anggota();
+            $this->m_pengurus->save_pengurus();
             // mengembalikan dalam bentuk json
             echo json_encode($data);
         } else {
             // validasi 
             $data = [
                 'error' => true,
-                'anggota_nm_error' => form_error('anggota_nm'),
-                'no_rumah_error' => form_error('no_rumah'),
-                'no_tlp_error' => form_error('no_tlp'),
+                'anggota_id_error' => form_error('anggota_id'),
+                'jabatan_error' => form_error('jabatan'),
+                'masa_jabatan_error' => form_error('masa_jabatan'),
+                'tgl_awal_jabatan_error' => form_error('tgl_awal_jabatan'),
+                'tgl_akhir_jabatan_error' => form_error('tgl_akhir_jabatan'),
 
             ];
             echo json_encode($data);
         }
     }
-    public function getAnggotaById($id)
+    public function getPengurusById($id)
     {
-        $data = $this->m_pengurus->getAnggotaById($id);
+        $data = $this->m_pengurus->getPengurusById($id);
         echo json_encode($data);
     }
-    public function updateAnggota()
+    public function updatePengurus()
     {
-        $this->form_validation->set_rules('anggota_nm', 'Nama Anggota', 'required');
-        $this->form_validation->set_rules('no_rumah', 'No Rumah', 'required');
-        $this->form_validation->set_rules('no_tlp', 'Nomor Telepon', 'required');
+        $this->form_validation->set_rules('anggota_id', 'Nama Anggota', 'required');
+        $this->form_validation->set_rules('jabatan', 'Jabatan', 'required');
+        $this->form_validation->set_rules('masa_jabatan', 'Masa Jabatan', 'required');
+        $this->form_validation->set_rules('tgl_awal_jabatan', 'Tanggal Awal Jabatan', 'required');
+        $this->form_validation->set_rules('tgl_akhir_jabatan', 'Tanggal Akhir Jabatan', 'required');
 
         if ($this->form_validation->run()) {
             $data = [
@@ -78,24 +84,26 @@ class Pengurus extends MY_Controller
 
             ];
             // save data
-            $this->m_pengurus->save_anggota();
+            $this->m_pengurus->save_pengurus();
             // mengembalikan dalam bentuk json
             echo json_encode($data);
         } else {
             // validasi 
             $data = [
                 'error' => true,
-                'anggota_nm_error' => form_error('anggota_nm'),
-                'no_rumah_error' => form_error('no_rumah'),
-                'no_tlp_error' => form_error('no_tlp'),
+                'anggota_id_error' => form_error('anggota_id'),
+                'jabatan_error' => form_error('jabatan'),
+                'masa_jabatan_error' => form_error('masa_jabatan'),
+                'tgl_awal_jabatan_error' => form_error('tgl_awal_jabatan'),
+                'tgl_akhir_jabatan_error' => form_error('tgl_akhir_jabatan'),
 
             ];
             echo json_encode($data);
         }
     }
-    public function deleteAnggota($id)
+    public function deletePengurus($id)
     {
-        $data = $this->m_pengurus->deleteAnggotaById($id);
+        $data = $this->m_pengurus->deletePengurusById($id);
         echo json_encode($data);
     }
 }

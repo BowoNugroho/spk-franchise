@@ -22,7 +22,7 @@ class M_anggota extends CI_Model
         $data['tgl_catat'] =  $date_now;
         $data['anggota_nm'] =  strtoupper($data['anggota_nm']);
         if ($data['anggota_id'] == '') {
-            $get_anggota = $this->db->where('tgl_catat', $date_now)->order_by('anggota_id', 'DESC')->get('anggota')->row_array();
+            $get_anggota = $this->db->where('tgl_catat', $date_now)->order_by('anggota_id', 'DESC')->get('mst_anggota')->row_array();
             if ($get_anggota == null) {
                 $data['anggota_id'] = date('ymd') . '0001';
             } else {

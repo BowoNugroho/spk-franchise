@@ -44,7 +44,7 @@
                                             <li class="fa <?= ($m['is_active'] == '1' ? 'fa-check-circle text-success' : 'fa-minus-circle text-danger') ?>"></li>
                                         </td>
                                         <td class="text-center" scope="col">
-                                            <a class="btn btn-primary btn-circle btn-sm btn-edit" data-toggle="modal" data-target="#editAnggota" data-id="<?= @$m['pengurus_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
+                                            <a class="btn btn-primary btn-circle btn-sm btn-edit" data-toggle="modal" data-target="#editPengurus" data-id="<?= @$m['pengurus_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
                                             <a class="btn btn-danger btn-circle btn-sm btn-delete" data-id="<?= @$m['pengurus_id'] ?>"><i class="far fa-trash-alt"></i></a>
                                     </tr>
                                 <?php endforeach; ?>
@@ -80,17 +80,6 @@
                         </select>
                         <span class="text-danger ">
                             <strong id="anggota_id_error"></strong>
-                        </span>
-                    </div>
-                    <div class="mb-3">
-                        <select class="custom-select custom-select-sm form-control 3" id="user_id" name="user_id">
-                            <option value=''>- Pilih User -</option>
-                            <?php foreach ($user as $a) : ?>
-                                <option value='<?= @$a['user_id'] ?>'><?= @$a['user_id'] ?> --- <?= @$a['user_nm'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <span class="text-danger ">
-                            <strong id="user_id_error"></strong>
                         </span>
                     </div>
                     <div class="mb-3">
@@ -137,34 +126,52 @@
     </div>
 </div>
 <!-- edit -->
-<div class="modal fade" id="editAnggota" tabindex="-1" aria-labelledby="editAnggotaModal" aria-hidden="true">
+<div class="modal fade" id="editPengurus" tabindex="-1" aria-labelledby="editPengurusModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editAnggotaLabel">Edit Role</h5>
+                <h5 class="modal-title" id="editPengurusLabel">Edit Role</h5>
             </div>
-            <form method="POST" id="update_anggota">
+            <form method="POST" id="update_pengurus">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="anggota_id" name="anggota_id" value="">
-                        <input type="text" class="form-control text-uppercase" id="anggota_nm" name="anggota_nm" placeholder="Nama Anggota">
-                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <input type="hidden" class="form-control" id="pengurus_id" name="pengurus_id" value="">
+                        <select class="custom-select custom-select-sm form-control" id="anggota_id" name="anggota_id">
+                            <option value=''>- Pilih Anggota -</option>
+                            <?php foreach ($anggota as $a) : ?>
+                                <option value='<?= @$a['anggota_id'] ?>'><?= @$a['anggota_id'] ?> --- <?= @$a['anggota_nm'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <span class="text-danger ">
-                            <strong id="anggota_nm_error"></strong>
+                            <strong id="anggota_id_error"></strong>
                         </span>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="no_rumah" name="no_rumah" placeholder="Nomor Rumah">
+                        <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="Nama Jabatan">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                         <span class="text-danger ">
-                            <strong id="no_rumah_error"></strong>
+                            <strong id="jabatan_error"></strong>
                         </span>
                     </div>
                     <div class="mb-3">
-                        <input type="number" class="form-control" id="no_tlp" name="no_tlp" placeholder="Nomor Telepon">
+                        <input type="text" class="form-control" id="masa_jabatan" name="masa_jabatan" placeholder="Masa Jabatan">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                         <span class="text-danger ">
-                            <strong id="no_tlp_error"></strong>
+                            <strong id="masa_jabatan_error"></strong>
+                        </span>
+                    </div>
+                    <div class="mb-3">
+                        <input type="date" class="form-control" id="tgl_awal_jabatan" name="tgl_awal_jabatan" placeholder="Tanggal Awal Jabatan">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <span class="text-danger ">
+                            <strong id="tgl_awal_jabatan_error"></strong>
+                        </span>
+                    </div>
+                    <div class="mb-3">
+                        <input type="date" class="form-control" id="tgl_akhir_jabatan" name="tgl_akhir_jabatan" placeholder="Tanggal Akhir Jabatan">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <span class="text-danger ">
+                            <strong id="tgl_akhir_jabatan_error"></strong>
                         </span>
                     </div>
                     <div class="mb-3">
@@ -176,7 +183,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="update_anggota">Ubah</button>
+                    <button type="submit" class="btn btn-primary" id="update_pengurus">Ubah</button>
                 </div>
             </form>
         </div>
@@ -189,10 +196,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         //Save Role
-        $('#save_anggota').on('submit', function(event) {
+        $('#save_pengurus').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: '<?= site_url($menu['url']); ?>/saveAnggota',
+                url: '<?= site_url($menu['url']); ?>/savePengurus',
                 type: 'POST',
                 data: $(this).serialize(),
                 dataType: 'json',
@@ -200,10 +207,12 @@
                     console.log(data);
                     if (data.error) {
                         console.log(data.error);
-                        if (data.anggota_nm_error != '') {
-                            $('#anggota_nm_error').html(data.anggota_nm_error);
-                            $('#no_rumah_error').html(data.no_rumah_error);
-                            $('#no_tlp').html(data.no_tlp);
+                        if (data.anggota_id_error != '') {
+                            $('#anggota_id_error').html(data.anggota_id_error);
+                            $('#jabatan_error').html(data.jabatan_error);
+                            $('#masa_jabatan_error').html(data.masa_jabatan_error);
+                            $('#tgl_awal_jabatan_error').html(data.tgl_awal_jabatan_error);
+                            $('#tgl_akhir_jabatan_error').html(data.tgl_akhir_jabatan_error);
                         }
                     }
                     if (data.success) {
@@ -219,34 +228,37 @@
             var id = $(this).attr('data-id');
             console.log(id);
             $.ajax({
-                url: '<?= site_url($menu['url']); ?>/getAnggotaById/' + id,
+                url: '<?= site_url($menu['url']); ?>/getPengurusById/' + id,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
                     console.log(response);
-                    $('input[name="anggota_id"]').val(response.anggota_id);
-                    $('input[name="anggota_nm"]').val(response.anggota_nm);
-                    $('input[name="no_rumah"]').val(response.no_rumah);
-                    $('input[name="no_tlp"]').val(response.no_tlp);
-                    $('select[name="is_active"]').val(response.is_active);
+                    $('select[name="anggota_id"]').val(response.anggota_id);
+                    $('input[name="pengurus_id"]').val(response.pengurus_id);
+                    $('input[name="jabatan"]').val(response.jabatan);
+                    $('input[name="masa_jabatan"]').val(response.masa_jabatan);
+                    $('input[name="tgl_awal_jabatan"]').val(response.tgl_awal_jabatan);
+                    $('input[name="tgl_akhir_jabatan"]').val(response.tgl_akhir_jabatan);
                 }
             })
         });
         // update data Menu
-        $('#update_anggota').on('submit', function(event) {
+        $('#update_pengurus').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: '<?= site_url($menu['url']); ?>/updateAnggota',
+                url: '<?= site_url($menu['url']); ?>/updatePengurus',
                 type: 'POST',
                 data: $(this).serialize(),
                 dataType: "JSON",
                 success: function(data) {
                     if (data.error) {
                         console.log(data.error);
-                        if (data.anggota_nm_error != '') {
-                            $('#anggota_nm_error').html(data.anggota_nm_error);
-                            $('#no_rumah_error').html(data.no_rumah_error);
-                            $('#no_tlp').html(data.no_tlp);
+                        if (data.anggota_id_error != '') {
+                            $('#anggota_id_error').html(data.anggota_id_error);
+                            $('#jabatan_error').html(data.jabatan_error);
+                            $('#masa_jabatan_error').html(data.masa_jabatan_error);
+                            $('#tgl_awal_jabatan_error').html(data.tgl_awal_jabatan_error);
+                            $('#tgl_akhir_jabatan_error').html(data.tgl_akhir_jabatan_error);
                         }
                     }
                     if (data.success) {
@@ -274,7 +286,7 @@
                 var id = $(this).attr('data-id');
                 console.log(id);
                 $.ajax({
-                    url: '<?= site_url($menu['url']); ?>/deleteAnggota/' + id,
+                    url: '<?= site_url($menu['url']); ?>/deletePengurus/' + id,
                     type: 'GET',
                     success: function(response) {
                         location.reload();
