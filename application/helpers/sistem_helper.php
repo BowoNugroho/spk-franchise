@@ -127,3 +127,19 @@ if (!function_exists('to_date')) {
         return $result;
     }
 }
+if (!function_exists('num_id')) {
+    function num_id($v, $s = null)
+    {
+        if ($v != '') {
+            if (is_numeric($v)) {
+                $res = number_format($v, 0, ",", ".");
+                if ($s != null && $v == 0) return $s;
+                else return $res;
+            } else {
+                return $s;
+            }
+        } else {
+            return 0;
+        }
+    }
+}

@@ -1,16 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Jadwal extends MY_Controller
+class Kas extends MY_Controller
 {
-    var $menu_id = '02.03', $menu, $cookie;
+    var $menu_id = '01.02', $menu, $cookie;
 
     public function __construct()
     {
         parent::__construct();
         $this->load->model(array(
             'management/m_menu',
-            'm_jadwal'
+            'm_kas'
         ));
 
         $this->menu = $this->m_menu->_getMenu($this->menu_id);
@@ -26,18 +26,21 @@ class Jadwal extends MY_Controller
     {
         //main data
         $data['menu'] = $this->menu;
-        $data['main'] = $this->m_jadwal->list_data();
-        // $data['user'] = $this->m_jadwal->get_user();
+        $data['main'] = $this->m_kas->list_data();
+        // $data['user'] = $this->m_kas->get_user();
         // echo "<pre>";
         // var_dump($data['user']);
         // die;
-        $data['anggota'] = $this->m_jadwal->get_anggota();
-        $this->render('jadwal/index', $data);
+        $data['anggota'] = $this->m_kas->get_anggota();
+        $this->render('kas/index', $data);
     }
-    public function saveJadwal()
+    public function saveKas()
     {
         $this->form_validation->set_rules('anggota_id', 'Nama Anggota', 'required');
-        $this->form_validation->set_rules('hari_ronda', 'Hari Ronda', 'required');
+        $this->form_validation->set_rules('jumlah_transaksi', 'Jumlah Transaksi', 'required');
+        $this->form_validation->set_rules('petugas_catat_id', 'Petugas Catat', 'required');
+        $this->form_validation->set_rules('transaksi_id', 'Transaksi', 'required');
+        $this->form_validation->set_rules('tgl_catat', 'Tanggal Catat', 'required');
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 
         if ($this->form_validation->run()) {
@@ -46,7 +49,7 @@ class Jadwal extends MY_Controller
 
             ];
             // save data
-            $this->m_jadwal->save_jadwal();
+            $this->m_kas->save_kas();
             // mengembalikan dalam bentuk json
             echo json_encode($data);
         } else {
@@ -54,22 +57,28 @@ class Jadwal extends MY_Controller
             $data = [
                 'error' => true,
                 'anggota_id_error' => form_error('anggota_id'),
-                'hari_ronda_error' => form_error('hari_ronda'),
+                'jumlah_transaksi_error' => form_error('jumlah_transaksi'),
+                'petugas_catat_id_error' => form_error('petugas_catat_id'),
+                'transaksi_id_error' => form_error('transaksi_id'),
+                'tgl_catat_error' => form_error('tgl_catat'),
                 'keterangan_error' => form_error('keterangan'),
 
             ];
             echo json_encode($data);
         }
     }
-    public function getJadwalById($id)
+    public function getKasById($id)
     {
-        $data = $this->m_jadwal->getJadwalById($id);
+        $data = $this->m_kas->getKasById($id);
         echo json_encode($data);
     }
-    public function updatePengurus()
+    public function updateKas()
     {
         $this->form_validation->set_rules('anggota_id', 'Nama Anggota', 'required');
-        $this->form_validation->set_rules('hari_ronda', 'Hari Ronda', 'required');
+        $this->form_validation->set_rules('jumlah_transaksi', 'Jumlah Transaksi', 'required');
+        $this->form_validation->set_rules('petugas_catat_id', 'Petugas Catat', 'required');
+        $this->form_validation->set_rules('transaksi_id', 'Transaksi', 'required');
+        $this->form_validation->set_rules('tgl_catat', 'Tanggal Catat', 'required');
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 
         if ($this->form_validation->run()) {
@@ -78,7 +87,7 @@ class Jadwal extends MY_Controller
 
             ];
             // save data
-            $this->m_jadwal->save_jadwal();
+            $this->m_kas->save_kas();
             // mengembalikan dalam bentuk json
             echo json_encode($data);
         } else {
@@ -86,16 +95,19 @@ class Jadwal extends MY_Controller
             $data = [
                 'error' => true,
                 'anggota_id_error' => form_error('anggota_id'),
-                'hari_ronda_error' => form_error('hari_ronda'),
+                'jumlah_transaksi_error' => form_error('jumlah_transaksi'),
+                'petugas_catat_id_error' => form_error('petugas_catat_id'),
+                'transaksi_id_error' => form_error('transaksi_id'),
+                'tgl_catat_error' => form_error('tgl_catat'),
                 'keterangan_error' => form_error('keterangan'),
 
             ];
             echo json_encode($data);
         }
     }
-    public function deleteJadwal($id)
+    public function deleteKas($id)
     {
-        $data = $this->m_jadwal->deleteJadwalById($id);
+        $data = $this->m_kas->deleteKasById($id);
         echo json_encode($data);
     }
 }
