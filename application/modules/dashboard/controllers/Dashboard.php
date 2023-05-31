@@ -8,9 +8,9 @@ class Dashboard extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		// $this->load->model(array(
-		// 	'm_menu'
-		// ));
+		$this->load->model(array(
+			'm_dashboard',
+		));
 
 		$this->menu = $this->m_menu->_getMenu($this->menu_id);
 
@@ -23,20 +23,15 @@ class Dashboard extends MY_Controller
 	}
 	public function index()
 	{
-		// $this->authorize($this->nav, '_view');
-		//cookie
-		// $this->cookie['cur_page'] = $this->uri->segment(4, 0);
-		// $this->cookie['total_rows'] = $this->m_nav->all_rows($this->cookie);
-		// set_cookie_nav($this->nav_id, $this->cookie);
-		// //main data
 		$data['menu'] = $this->menu;
-		// $data['cookie'] = $this->cookie;
-		// $data['main'] = $this->m_nav->list_data($this->cookie);
-		// $data['pagination_info'] = pagination_info(count($data['main']), $this->cookie);
-		// //set pagination
-		// set_pagination($this->nav, $this->cookie);
-		// //render
-		// create_log('_view', $this->nav_id);
-		$this->render('index', $data);
+		$data['jumlah_kas'] = $this->m_dashboard->get_jmlkas();
+		$data['pemasukan_kas'] = $this->m_dashboard->get_pemasukan_kas();
+		$data['pengeluaran_kas'] = $this->m_dashboard->get_pengeluaran_kas();
+		$data['pengeluarantotal_kas'] = $this->m_dashboard->get_pengeluaran_total_kas();
+		$data['kas_sekarang'] = $data['jumlah_kas']['jumlah_transaksi'] - $data['pengeluarantotal_kas']['jml_pengeluaran'];
+		// echo "<pre>";
+		// var_dump($data);
+		// die;
+		$this->render('dashboard/dashboard/index', $data);
 	}
 }
