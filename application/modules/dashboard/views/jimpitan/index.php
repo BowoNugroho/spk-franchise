@@ -9,11 +9,11 @@
             <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
             <?= $this->session->flashdata('message'); ?>
             <span id="success_message"></span>
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#tambahKas"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#tambahJimpitan"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Transaksi KAS</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Transaksi Jimpitan</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -46,8 +46,8 @@
                                             <li class="fa <?= ($m['is_active'] == '1' ? 'fa-check-circle text-success' : 'fa-minus-circle text-danger') ?>"></li>
                                         </td>
                                         <td class="text-center" scope="col">
-                                            <a class="btn btn-primary btn-circle btn-sm btn-edit" data-toggle="modal" data-target="#editKas" data-id="<?= @$m['transaksikas_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
-                                            <a class="btn btn-danger btn-circle btn-sm btn-delete" data-id="<?= @$m['transaksikas_id'] ?>"><i class="far fa-trash-alt"></i></a>
+                                            <a class="btn btn-primary btn-circle btn-sm btn-edit" data-toggle="modal" data-target="#editJimpitan" data-id="<?= @$m['transaksijimpitan_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
+                                            <a class="btn btn-danger btn-circle btn-sm btn-delete" data-id="<?= @$m['transaksijimpitan_id'] ?>"><i class="far fa-trash-alt"></i></a>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -64,16 +64,16 @@
 </div>
 <!-- End of Main Content -->
 <!-- Tambah -->
-<div class="modal fade" id="tambahKas" tabindex="-1" aria-labelledby="tambahKasModal" aria-hidden="true">
+<div class="modal fade" id="tambahJimpitan" tabindex="-1" aria-labelledby="tambahJimpitanModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tambahKasLabel">Menambah Transaksi Kas Baru</h5>
+                <h5 class="modal-title" id="tambahJimpitanLabel">Menambah Transaksi Kas Baru</h5>
             </div>
-            <form method="POST" id="save_kas">
+            <form method="POST" id="save_jimpitan">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="transaksikas_id" name="transaksikas_id" value="">
+                        <input type="hidden" class="form-control" id="transaksijimpitan_id" name="transaksijimpitan_id" value="">
                         <select class="custom-select custom-select-sm form-control" id="anggota_id" name="anggota_id">
                             <option value=''>- Pilih Anggota -</option>
                             <?php foreach ($anggota as $a) : ?>
@@ -137,23 +137,23 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="save_kas">Tambah</button>
+                    <button type="submit" class="btn btn-primary" id="save_jimpitan">Tambah</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- edit -->
-<div class="modal fade" id="editKas" tabindex="-1" aria-labelledby="editKasModal" aria-hidden="true">
+<div class="modal fade" id="editJimpitan" tabindex="-1" aria-labelledby="editJimpitanModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editKasLabel">Edit Role</h5>
+                <h5 class="modal-title" id="editJimpitanLabel">Edit Role</h5>
             </div>
-            <form method="POST" id="update_kas">
+            <form method="POST" id="update_jimpitan">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="transaksikas_id" name="transaksikas_id" value="">
+                        <input type="hidden" class="form-control" id="transaksijimpitan_id" name="transaksijimpitan_id" value="">
                         <select class="custom-select custom-select-sm form-control" id="anggota_id" name="anggota_id">
                             <option value=''>- Pilih Anggota -</option>
                             <?php foreach ($anggota as $a) : ?>
@@ -217,7 +217,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="update_kas">Ubah</button>
+                    <button type="submit" class="btn btn-primary" id="update_jimpitan">Ubah</button>
                 </div>
             </form>
         </div>
@@ -230,10 +230,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         //Save Role
-        $('#save_kas').on('submit', function(event) {
+        $('#save_jimpitan').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: '<?= site_url($menu['url']); ?>/saveKas',
+                url: '<?= site_url($menu['url']); ?>/saveJimpitan',
                 type: 'POST',
                 data: $(this).serialize(),
                 dataType: 'json',
@@ -263,12 +263,12 @@
             var id = $(this).attr('data-id');
             console.log(id);
             $.ajax({
-                url: '<?= site_url($menu['url']); ?>/getKasById/' + id,
+                url: '<?= site_url($menu['url']); ?>/getJimpitanById/' + id,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
                     console.log(response);
-                    $('input[name="transaksikas_id"]').val(response.transaksikas_id);
+                    $('input[name="transaksijimpitan_id"]').val(response.transaksijimpitan_id);
                     $('select[name="anggota_id"]').val(response.anggota_id);
                     $('select[name="petugas_catat_id"]').val(response.petugas_catat_id);
                     // $('select[name="transaksi_id"]').val(response.transaksi_id);
@@ -279,10 +279,10 @@
             })
         });
         // update data Menu
-        $('#update_kas').on('submit', function(event) {
+        $('#update_jimpitan').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: '<?= site_url($menu['url']); ?>/updateKas',
+                url: '<?= site_url($menu['url']); ?>/updateJimpitan',
                 type: 'POST',
                 data: $(this).serialize(),
                 dataType: "JSON",
@@ -323,7 +323,7 @@
                 var id = $(this).attr('data-id');
                 console.log(id);
                 $.ajax({
-                    url: '<?= site_url($menu['url']); ?>/deleteKas/' + id,
+                    url: '<?= site_url($menu['url']); ?>/deleteJimpitan/' + id,
                     type: 'GET',
                     success: function(response) {
                         location.reload();

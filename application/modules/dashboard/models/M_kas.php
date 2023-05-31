@@ -8,11 +8,13 @@ class M_kas extends CI_Model
     var $sess;
     public function list_data()
     {
-        $sql = "SELECT a.* , b.anggota_nm , c.anggota_nm as petugas_nm, d.tipe_transaksi
-        FROM dat_transaksi_kas a 
-        LEFT JOIN mst_anggota b ON a.anggota_id = b.anggota_id
-        LEFT JOIN mst_anggota c ON a.petugas_catat_id = c.anggota_id
-        LEFT JOIN tipe_transaksi d ON a.transaksi_id = d.transaksi_id";
+        $sql =
+            "SELECT a.* , b.anggota_nm , c.anggota_nm as petugas_nm, d.tipe_transaksi
+            FROM dat_transaksi_kas a 
+            LEFT JOIN mst_anggota b ON a.anggota_id = b.anggota_id
+            LEFT JOIN mst_anggota c ON a.petugas_catat_id = c.anggota_id
+            LEFT JOIN tipe_transaksi d ON a.transaksi_id = d.transaksi_id 
+            ORDER BY a.tgl_catat ASC";
         $query = $this->db->query($sql);
         return $query->result_array();
     }
