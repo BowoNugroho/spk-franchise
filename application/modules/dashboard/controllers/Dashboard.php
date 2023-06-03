@@ -29,6 +29,18 @@ class Dashboard extends MY_Controller
 		$data['pengeluaran_kas'] = $this->m_dashboard->get_pengeluaran_kas();
 		$data['pengeluarantotal_kas'] = $this->m_dashboard->get_pengeluaran_total_kas();
 		$data['kas_sekarang'] = $data['jumlah_kas']['jumlah_transaksi'] - $data['pengeluarantotal_kas']['jml_pengeluaran'];
+		$data['jumlah_jimpitan'] = $this->m_dashboard->get_jmljimpitan();
+		$data['pemasukan_jimpitan'] = $this->m_dashboard->get_pemasukan_jimpitan();
+		$data['pengeluaran_jimpitan'] = $this->m_dashboard->get_pengeluaran_jimpitn();
+		$data['pengeluarantotal_jimpitan'] = $this->m_dashboard->get_pengeluaran_total_jimpitan();
+		$data['jimpitan_sekarang'] = $data['jumlah_jimpitan']['jumlah_transaksi'] - $data['pengeluarantotal_jimpitan']['jml_pengeluaran'];
+		$data['senin'] = $this->m_dashboard->get_jadwal_ronda('Senin');
+		$data['selasa'] = $this->m_dashboard->get_jadwal_ronda('Selasa');
+		$data['rabu'] = $this->m_dashboard->get_jadwal_ronda('Rabu');
+		$data['kamis'] = $this->m_dashboard->get_jadwal_ronda('Kamis');
+		$data['jumat'] = $this->m_dashboard->get_jadwal_ronda('Jumat');
+		$data['sabtu'] = $this->m_dashboard->get_jadwal_ronda('Sabtu');
+		$data['minggu'] = $this->m_dashboard->get_jadwal_ronda('Minggu');
 		// echo "<pre>";
 		// var_dump($data);
 		// die;
