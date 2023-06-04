@@ -29,7 +29,7 @@
 
 </head>
 
-<body id="page-top">
+<body class="body" id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">

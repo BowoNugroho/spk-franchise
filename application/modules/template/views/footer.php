@@ -59,6 +59,8 @@
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
 <!-- <script type="text/javascript" charset="utf8" src="<?= base_url('assets/') ?>js/jquery.dataTables.js"></script> -->
 <!-- <script src="<?= base_url('assets/') ?>js/jquery-3.6.0.min.js"></script> -->
@@ -69,7 +71,21 @@
         $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
 
+    var idleMax = 1; // Logout after 25 minutes of IDLE
+    var idleTime = 0;
 
+    var idleInterval = setInterval("timerIncrement()", 60000); // 1 minute interval    
+    $("body").mousemove(function(event) {
+        idleTime = 0; // reset to zero
+    });
+
+    // count minutes
+    function timerIncrement() {
+        idleTime = idleTime + 1;
+        if (idleTime > idleMax) {
+            window.location = "<?= base_url('index.php/auth/login/logout'); ?>";
+        }
+    }
 
     // $('.form-check-input').on('click', function() {
     //     const menuId = $(this).data('menu');
