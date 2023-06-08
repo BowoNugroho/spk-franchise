@@ -71,7 +71,7 @@
         $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
 
-    var idleMax = 1; // Logout after 25 minutes of IDLE
+    var idleMax = 10; // Logout after 25 minutes of IDLE
     var idleTime = 0;
 
     var idleInterval = setInterval("timerIncrement()", 60000); // 1 minute interval    
