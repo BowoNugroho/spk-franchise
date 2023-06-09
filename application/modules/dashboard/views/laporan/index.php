@@ -10,16 +10,20 @@
             <?= $this->session->flashdata('message'); ?>
             <span id="success_message"></span>
             <form id="form-search" action="<?= site_url() .  '/management/menu/search/' . $menu['menu_id']  ?>" method="post" autocomplete="off">
-                <div class="col-lg-3 col-md-3 mb-2">
-                    <input type="date" class="form-control " name="tgl1" id="tgl1" value="<?= @$cookie['search']['tgl1'] ?>">
-                </div>
-                <div class="col-lg-3 col-md-3 mb-2">
-                    <input type="date" class="form-control " name="tgl2" id="tgl2" value="<?= @$cookie['search']['tgl2'] ?>">
-                </div>
-                <div class="col-md-6 pl-2 mb-2">
-                    <button type="submit" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" data-custom-class="tooltip-primary" title="" data-original-title="Tampilkan Data"><i class="fas fa-search"></i> Tampilkan</button>
-                    <a class="btn btn-xs  btn-warning" href="<?= site_url() . '/management/menu/reset/' . $menu['menu_id']  ?>" data-toggle="tooltip" data-placement="top" data-custom-class="tooltip-default" title="" data-original-title="Reset"><i class="fa fa-sync-alt"></i></a>
-                    <a class="btn btn-xs  btn-info" href="<?= site_url() . '/dashboard/laporan/cetak' ?>" data-toggle="tooltip" data-placement="top" data-custom-class="tooltip-default" title=""><i class="fa fa-print"> Cetak</i></a>
+                <div class="row">
+                    <label class="col-md-1">Tgl Awal</label>
+                    <div class="col-md-2 col-md-3 mb-2">
+                        <input type="date" class="form-control " name="tgl1" id="tgl1" value="<?= @$cookie['search']['tgl1'] ?>">
+                    </div>
+                    <label class="col-md-1">Tgl Akhir</label>
+                    <div class="col-md-2 col-md-3 mb-2">
+                        <input type="date" class="form-control " name="tgl2" id="tgl2" value="<?= @$cookie['search']['tgl2'] ?>">
+                    </div>
+                    <div class="col-md-3 col-md-3 mb-2">
+                        <button type="submit" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" data-custom-class="tooltip-primary" title="" data-original-title="Tampilkan Data"><i class="fas fa-search"></i> Tampilkan</button>
+                        <a class="btn btn-xs  btn-warning" href="<?= site_url() . '/management/menu/reset/' . $menu['menu_id']  ?>" data-toggle="tooltip" data-placement="top" data-custom-class="tooltip-default" title="" data-original-title="Reset"><i class="fa fa-sync-alt"></i></a>
+                        <a class="btn btn-xs  btn-info" href="<?= site_url() . '/dashboard/laporan/cetak' ?>" data-toggle="tooltip" data-placement="top" data-custom-class="tooltip-default" title=""><i class="fa fa-print"> Cetak</i></a>
+                    </div>
                 </div>
             </form>
             <!-- <input type="text" class="form-control " name="tgl3" id="tgl3" value="<?= @$cookie['search']['tgl3'] ?>"> -->
