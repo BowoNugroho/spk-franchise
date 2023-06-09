@@ -1,28 +1,25 @@
 <?php
 class M_laporan extends CI_Model
 {
-    function __construct()
+    // function __construct()
+    // {
+    //     parent::__construct();
+    // }
+    // var $sess;
+    public function list_data($cookie)
     {
-        parent::__construct();
-    }
-    var $sess;
-    public function list_data()
-    {
-        $data = $this->input->post();
-        $tgl1 = $data['tgl1'];
-        $tgl2 = $data['tgl2'];
         $sql =
-            "SELECT a.created_at  ,a.transaksikas_id, a.tgl_catat, sum(a.jumlah_transaksi) as jumlah_pemasukan
+        "SELECT a.created_at  ,a.transaksikas_id, a.tgl_catat, sum(a.jumlah_transaksi) as jumlah_pemasukan
             FROM dat_transaksi_kas a 
-            WHERE a.tgl_catat BETWEEN  '$tgl1'  AND '$tgl2'
+            WHERE a.tgl_catat BETWEEN  '" . @$cookie['search']['tgl1'] . "'  AND '" . @$cookie['search']['tgl2'] . "'
             GROUP BY a.tgl_catat
             ORDER BY a.created_at  asc";
         $query = $this->db->query($sql);
         $row1 = $query->result_array();
         $sql =
-            "SELECT a.created_at  ,a.pengeluaran_id , a.tgl_catat , sum(a.jml_pengeluaran) as jumlah_pengeluaran
+        "SELECT a.created_at  ,a.pengeluaran_id , a.tgl_catat , sum(a.jml_pengeluaran) as jumlah_pengeluaran
             FROM dat_pengeluaran a 
-            WHERE a.asal = 'Kas' AND  a.tgl_catat BETWEEN  '$tgl1'  AND '$tgl2'
+            WHERE a.asal = 'Kas' AND  a.tgl_catat BETWEEN '" . @$cookie['search']['tgl1'] . "'  AND '" . @$cookie['search']['tgl2'] . "'
             GROUP BY a.tgl_catat
             ORDER BY a.created_at  asc";
         $query = $this->db->query($sql);
@@ -31,23 +28,23 @@ class M_laporan extends CI_Model
         $hasil = array_merge($row1, $row2);
         return  $hasil;
     }
-    public function list_jimpitan()
+    public function list_jimpitan($cookie)
     {
         $data = $this->input->post();
         $tgl1 = $data['tgl1'];
         $tgl2 = $data['tgl2'];
         $sql =
-            "SELECT a.created_at  ,a.transaksijimpitan_id, a.tgl_catat, sum(a.jumlah_transaksi) as jumlah_pemasukan
+        "SELECT a.created_at  ,a.transaksijimpitan_id, a.tgl_catat, sum(a.jumlah_transaksi) as jumlah_pemasukan
             FROM dat_transaksi_jimpitan a 
-            WHERE a.tgl_catat BETWEEN  '$tgl1'  AND '$tgl2'
+            WHERE a.tgl_catat BETWEEN  '" . @$cookie['search']['tgl1'] . "'  AND '" . @$cookie['search']['tgl2'] . "'
             GROUP BY a.tgl_catat
             ORDER BY a.created_at  asc";
         $query = $this->db->query($sql);
         $row1 = $query->result_array();
         $sql =
-            "SELECT a.created_at  ,a.pengeluaran_id , a.tgl_catat , sum(a.jml_pengeluaran) as jumlah_pengeluaran
+        "SELECT a.created_at  ,a.pengeluaran_id , a.tgl_catat , sum(a.jml_pengeluaran) as jumlah_pengeluaran
             FROM dat_pengeluaran a 
-            WHERE a.asal = 'Jimpitan' AND  a.tgl_catat BETWEEN  '$tgl1'  AND '$tgl2'
+            WHERE a.asal = 'Jimpitan' AND  a.tgl_catat BETWEEN '" . @$cookie['search']['tgl1'] . "'  AND '" . @$cookie['search']['tgl2'] . "'
             GROUP BY a.tgl_catat
             ORDER BY a.created_at  asc";
         $query = $this->db->query($sql);

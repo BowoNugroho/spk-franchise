@@ -42,6 +42,14 @@ if (!function_exists('setCookieMenu')) {
         $CI->input->set_cookie($cookie);
     }
 }
+if (!function_exists('delCookieMenu')) {
+    function delCookieMenu($menu_id)
+    {
+        $menu_id = str_replace('.', '_', $menu_id);
+        $CI = get_instance();
+        delete_cookie($menu_id);
+    }
+}
 
 if (!function_exists('point_to_under')) {
     function point_to_under($id = null)

@@ -101,4 +101,29 @@ class Menu extends MY_Controller
 		$data = $this->m_menu->deleteMenuById($id);
 		echo json_encode($data);
 	}
+
+	public function search($menu_id, $id = '')
+	{
+		$menu = $this->m_menu->_getMenu($menu_id);
+		$data = $this->input->post(null, true);
+		if ($data == null) redirect(site_url() . '/message/error_403');
+		$cookie = getCookieMenu($menu_id);
+		$cookie['search'] = $data;
+		setCookieMenu($menu_id, $cookie);
+		if (@$id != '') {
+			redirect(site_url() . '/' . $menu['url'] . '/index/' . @$id);
+		} else {
+			redirect(site_url() . '/' . $menu['url']);
+		}
+	}
+	public function reset($menu_id, $id = '')
+	{
+		$menu = $this->m_menu->_getMenu($menu_id);
+		delCookieMenu($menu_id);
+		if (@$id != '') {
+			redirect(site_url() . '/' . $menu['url'] . '/index/' . @$id);
+		} else {
+			redirect(site_url() . '/' . $menu['url']);
+		}
+	}
 }
