@@ -52,7 +52,6 @@
 <script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.min.js" defer type="text/javascript"></script>
 <script src="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.min.js" defer type="text/javascript"></script>
 <script src="<?= base_url('assets/') ?>plugins/jquery-toast/jquery.toast.min.js" defer></script>
-<!-- <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script> -->
 
 <!-- Page level custom scripts -->
 <script src="<?= base_url('assets/') ?>js/demo/datatables-demo.js"></script>
@@ -60,10 +59,6 @@
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
-<!-- <script type="text/javascript" charset="utf8" src="<?= base_url('assets/') ?>js/jquery.dataTables.js"></script> -->
-<!-- <script src="<?= base_url('assets/') ?>js/jquery-3.6.0.min.js"></script> -->
 
 <script>
     $('.custom-file-input').on('change', function() {
@@ -86,23 +81,6 @@
             window.location = "<?= base_url('index.php/auth/login/logout'); ?>";
         }
     }
-
-    // $('.form-check-input').on('click', function() {
-    //     const menuId = $(this).data('menu');
-    //     const roleId = $(this).data('role');
-
-    //     $.ajax({
-    //         url: "<?= base_url('admin/changeaccess') ?>",
-    //         type: 'post',
-    //         data: {
-    //             menuId: menuId,
-    //             roleId: roleId,
-    //         },
-    //         success: function() {
-    //             document.location.href = " <?= base_url('admin/roleaccess/'); ?>" + roleId;
-    //         }
-    //     })
-    // });
 </script>
 
 </body>

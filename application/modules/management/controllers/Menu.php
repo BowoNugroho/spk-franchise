@@ -28,9 +28,6 @@ class Menu extends MY_Controller
 		// $data['cookie'] = $this->cookie;
 		$data['main'] = $this->m_menu->list_data($this->cookie);
 		$data['parent'] = $this->m_menu->get_menu();
-		// echo  "<pre>";
-		// var_dump($data['parent']);
-		// die;
 		$this->render('menu/index', $data);
 	}
 	public function saveMenu()

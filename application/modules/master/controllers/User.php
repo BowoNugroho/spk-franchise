@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends MY_Controller
 {
-    var $menu_id = '03.04', $menu, $cookie;
+    var $menu_id = '02.01', $menu, $cookie;
 
     public function __construct()
     {
@@ -11,14 +11,13 @@ class User extends MY_Controller
         $this->load->model(array(
             'management/m_menu',
             'm_user',
-            'm_user'
         ));
 
         $this->menu = $this->m_menu->_getMenu($this->menu_id);
 
         //cookie
         $this->cookie = getCookieMenu($this->menu_id);
-        if ($this->cookie['search'] == null) $this->cookie['search'] = array('term' => '', 'user_nm add ' => '');
+        if ($this->cookie['search'] == null) $this->cookie['search'] = array('term' => '', 'nama add ' => '');
         if ($this->cookie['order'] == null) $this->cookie['order'] = array('field' => 'role_id', 'type' => 'asc');
         if ($this->cookie['per_page'] == null) $this->cookie['per_page'] = 1000;
         if ($this->cookie['cur_page'] == null) $this->cookie['cur_page'] = 0;
@@ -34,7 +33,7 @@ class User extends MY_Controller
     public function saveUser()
     {
         $this->form_validation->set_rules('role_id', 'Role Id', 'required');
-        $this->form_validation->set_rules('user_nm', 'Nama User', 'required');
+        $this->form_validation->set_rules('nama', 'Nama User', 'required');
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -52,7 +51,7 @@ class User extends MY_Controller
             $data = [
                 'error' => true,
                 'role_id_error' => form_error('role_id'),
-                'user_nm_error' => form_error('user_nm'),
+                'nama_error' => form_error('nama'),
                 'username_error' => form_error('username'),
                 'password_error' => form_error('password'),
 
@@ -68,7 +67,7 @@ class User extends MY_Controller
     public function updateUser()
     {
         $this->form_validation->set_rules('role_id', 'Role Id', 'required');
-        $this->form_validation->set_rules('user_nm', 'Nama User', 'required');
+        $this->form_validation->set_rules('nama', 'Nama User', 'required');
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -86,7 +85,7 @@ class User extends MY_Controller
             $data = [
                 'error' => true,
                 'role_id_error' => form_error('role_id'),
-                'user_nm_error' => form_error('user_nm'),
+                'nama_error' => form_error('nama'),
                 'username_error' => form_error('username'),
                 'password_error' => form_error('password'),
 

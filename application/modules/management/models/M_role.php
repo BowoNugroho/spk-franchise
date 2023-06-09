@@ -18,12 +18,10 @@ class M_role extends CI_Model
     {
         $data = $this->input->post();
         if ($data['role_id'] == '') {
-            $data['created_at'] =   date('Y-m-d H:i:s');
-            $data['created_by'] = $this->session->userdata('username');
+            $get = $this->db->order_by('role_id', 'DESC')->get('role')->row_array();
+            $data['role_id'] = $get['role_id'] + 1;
             $this->db->insert('role', $data);
         } else {
-            $data['updated_at'] =   date('Y-m-d H:i:s');
-            $data['updated_by'] = $this->session->userdata('username');
             $this->db->where('role_id', $data['role_id'])->update('role', $data);
         }
     }

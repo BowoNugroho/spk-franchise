@@ -9,7 +9,7 @@
 								<table width="100%">
 									<tr>
 										<td class="text-center mt-3 ">
-											SISTEM INFORMASI E-KAS
+											SPK PEMILIHAN FRANCHISE
 										</td>
 									</tr>
 									<tr>
@@ -17,7 +17,7 @@
 									</tr>
 									<tr>
 										<td class="text-center">
-											<img class="img-profile" src=" <?= base_url('assets/img/login5.svg') ?>" width="300px">
+											<img class="img-profile" src=" <?= base_url('assets/img/shop.svg') ?>" width="300px">
 										</td>
 									</tr>
 								</table>
@@ -26,7 +26,7 @@
 						<div class="col-lg-6">
 							<div class="p-5">
 								<div class="text-center">
-									<h1 class="h4 text-gray-900 mb-4">Halaman Login</h1>
+									<h1 class="h4 text-gray-900 mb-4">Login</h1>
 								</div>
 								<?= $this->session->flashdata('message'); ?>
 								<form class="user" method="post" <?= base_url('auth/login'); ?>>

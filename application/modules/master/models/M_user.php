@@ -27,13 +27,12 @@ class M_user extends CI_Model
         $data = $this->input->post();
         $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
         $data['is_active'] = '1';
+        $data['image'] = 'default.jpg';
         if ($data['user_id'] == '') {
-            $data['created_at'] =   date('Y-m-d H:i:s');
-            $data['created_by'] = $this->session->userdata('username');
+            $get = $this->db->order_by('user_id', 'DESC')->get('user')->row_array();
+            $data['user_id'] = $get['user_id'] + 1;
             $this->db->insert('user', $data);
         } else {
-            $data['updated_at'] =   date('Y-m-d H:i:s');
-            $data['updated_by'] = $this->session->userdata('username');
             $this->db->where('user_id', $data['user_id'])->update('user', $data);
         }
     }

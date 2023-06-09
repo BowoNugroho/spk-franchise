@@ -42,7 +42,7 @@
                                             <?php endif; ?>
                                         </td>
                                         <td class="text-center" scope="col">
-                                            <input type="checkbox" class="form-check-input cb_detail_<?= point_to_under($m['menu_id']) ?>" name="cb_view[<?= point_to_under($m['menu_id']) ?>]" onclick="cb_access('<?= $m['menu_id'] ?>')" value="1" <?php if ($m['_view'] == '1') echo 'checked'; ?>>
+                                            <input type="checkbox" class="form-check-input cb_detail_<?= point_to_under($m['menu_id']) ?>" name="cb_view[<?= point_to_under($m['menu_id']) ?>]" onclick="cb_access('<?= $m['menu_id'] ?>')" value="1" <?php if ($m['access'] == '1') echo 'checked'; ?>>
                                         </td>
                                     <?php endforeach; ?>
                             </tbody>
