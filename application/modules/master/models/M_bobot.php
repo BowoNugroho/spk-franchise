@@ -42,17 +42,18 @@ class M_bobot extends CI_Model
             $this->db->where('bobot_id', $data['bobot_id'])->update('bobot', $data);
         }
     }
-    public function getKriteriaById($id = '')
+    public function getBobotById($id = '')
     {
-        $sql = "SELECT a.* 
-                FROM kriteria a 
-                WHERE a.kriteria_id = $id ";
+        $sql = "SELECT a.* ,b.kriteria_nm
+                FROM bobot a 
+                LEFT JOIN kriteria b ON a.kriteria_id = b.kriteria_id
+                WHERE a.bobot_id = $id ";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
-    public function deleteKriteriaById($id)
+    public function deleteBobotById($id)
     {
-        $this->db->where('kriteria_id', $id);
-        $this->db->delete('kriteria');
+        $this->db->where('bobot_id', $id);
+        $this->db->delete('bobot');
     }
 }

@@ -86,15 +86,30 @@ class Bobot extends MY_Controller
             echo json_encode($data);
         }
     }
-    public function getKriteriaById($id)
+    public function getBobotById($id)
     {
-        $data = $this->m_bobot->getKriteriaById($id);
+        $data = $this->m_bobot->getBobotById($id);
         echo json_encode($data);
     }
-    public function updateKriteria()
+    public function updateBobot()
     {
-        $this->form_validation->set_rules('kriteria_nm', 'Nama Kriteria', 'required');
-        $this->form_validation->set_rules('kriteria_kode', 'Kode Kriteria', 'required');
+        $dt = $this->input->post();
+        if ($dt['is_between'] == 1) {
+            $this->form_validation->set_rules('kriteria_id', 'Nama Kriteria', 'required');
+            $this->form_validation->set_rules('is_between', 'is_between?', 'required');
+            // $this->form_validation->set_rules('operator', 'Operator', 'required');
+            $this->form_validation->set_rules('sub_kriteria1', 'Sub Kriteria 1', 'required');
+            $this->form_validation->set_rules('sub_kriteria2', 'Sub Kriteria 2', 'required');
+            $this->form_validation->set_rules('nilai_bobot', 'Nilai Bobot', 'required');
+        } else {
+            $this->form_validation->set_rules('kriteria_id', 'Nama Kriteria', 'required');
+            $this->form_validation->set_rules('is_between', 'is_between?', 'required');
+            $this->form_validation->set_rules('operator', 'Operator', 'required');
+            $this->form_validation->set_rules('sub_kriteria1', 'Sub Kriteria 1', 'required');
+            // $this->form_validation->set_rules('sub_kriteria2', 'Sub Kriteria 2', 'required');
+            $this->form_validation->set_rules('nilai_bobot', 'Nilai Bobot', 'required');
+        }
+
 
         if ($this->form_validation->run()) {
             $data = [
@@ -102,23 +117,40 @@ class Bobot extends MY_Controller
 
             ];
             // save data
-            $this->m_bobot->save_kriteria();
+            $this->m_bobot->save_bobot();
             // mengembalikan dalam bentuk json
             echo json_encode($data);
         } else {
             // validasi 
-            $data = [
-                'error' => true,
-                'kriteria_nm_error' => form_error('kriteria_nm'),
-                'kriteria_kode_error' => form_error('kriteria_kode'),
+            if ($dt['is_between'] == 1) {
+                $data = [
+                    'error' => true,
+                    'kriteria_id_error' => form_error('kriteria_id'),
+                    'is_between_error' => form_error('is_between'),
+                    // 'operator_error' => form_error('operator'),
+                    'sub_kriteria1_error' => form_error('sub_kriteria1'),
+                    'sub_kriteria2_error' => form_error('sub_kriteria2'),
+                    'nilai_bobot_error' => form_error('nilai_bobot'),
 
-            ];
+                ];
+            } else {
+                $data = [
+                    'error' => true,
+                    'kriteria_id_error' => form_error('kriteria_id'),
+                    'is_between_error' => form_error('is_between'),
+                    'operator_error' => form_error('operator'),
+                    'sub_kriteria1_error' => form_error('sub_kriteria1'),
+                    // 'sub_kriteria2_error' => form_error('sub_kriteria2'),
+                    'nilai_bobot_error' => form_error('nilai_bobot'),
+
+                ];
+            }
             echo json_encode($data);
         }
     }
-    public function deleteKriteria($id)
+    public function deleteBobot($id)
     {
-        $data = $this->m_bobot->deleteKriteriaById($id);
+        $data = $this->m_bobot->deleteBobotById($id);
         echo json_encode($data);
     }
 }

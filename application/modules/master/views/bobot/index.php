@@ -126,33 +126,68 @@
     </div>
 </div>
 <!-- Edit  -->
-<div class="modal fade" id="editKriteria" tabindex="-1" aria-labelledby="editKriteriaModal" aria-hidden="true">
+<div class="modal fade" id="editBobot" tabindex="-1" aria-labelledby="editBobotModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editKriteriaLabel">Edit Menu </h5>
+                <h5 class="modal-title" id="editBobotLabel">Edit Bobot </h5>
             </div>
-            <form method="POST" id="update_kriteria">
+            <form method="POST" id="update_bobot">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="kriteria_id" name="kriteria_id" value="">
-                        <input type="text" class="form-control" id="kriteria_nm" name="kriteria_nm" placeholder="Nama Kriteria">
-                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <input type="hidden" class="form-control" id="bobot_id" name="bobot_id" value="">
+                        <select class="custom-select custom-select-sm form-control" id="kriteria_id" name="kriteria_id">
+                            <option value=''>- Pilih Kriteria -</option>
+                            <?php foreach ($kriteria as $row) : ?>
+                                <option value="<?= $row['kriteria_id'] ?>"> <?= $row['kriteria_nm'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <span class="text-danger ">
-                            <strong id="kriteria_nm_error"></strong>
+                            <strong id="kriteria_id_error"></strong>
                         </span>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="kriteria_kode" name="kriteria_kode" placeholder="Kode Kriteria">
+                        <select class="custom-select custom-select-sm form-control" id="is_between" name="is_between">
+                            <option value=''>- is_between? -</option>
+                            <option value="1"> Ya</option>
+                            <option value="0"> Tidak</option>
+                        </select>
+                        <span class="text-danger ">
+                            <strong id="is_between_error"></strong>
+                        </span>
+                    </div>
+                    <div class="mb-3 d-none" id="box-operator-edit">
+                        <input type="text" class="form-control" id="operator" name="operator" placeholder="Operator">
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                         <span class="text-danger ">
-                            <strong id="kriteria_kode_error"></strong>
+                            <strong id="operator_error"></strong>
+                        </span>
+                    </div>
+                    <div class="mb-3 d-none" id="sub-kriteria1-edit">
+                        <input type="text" class="form-control" id="sub_kriteria1" name="sub_kriteria1" placeholder="Sub Kriteria 1">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <span class="text-danger ">
+                            <strong id="sub_kriteria1_error"></strong>
+                        </span>
+                    </div>
+                    <div class="mb-3 d-none" id="sub-kriteria2-edit">
+                        <input type="text" class="form-control" id="sub_kriteria2" name="sub_kriteria2" placeholder="Sub Kriteria 2">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <span class="text-danger ">
+                            <strong id="sub_kriteria2_error"></strong>
+                        </span>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="nilai_bobot" name="nilai_bobot" placeholder="Nilai Bobot">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <span class="text-danger ">
+                            <strong id="nilai_bobot_error"></strong>
                         </span>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary" id="update_kriteria">Ubah</button>
+                    <button type="submit" class="btn btn-primary" id="update_bobot">Ubah</button>
                 </div>
             </form>
         </div>
@@ -199,31 +234,41 @@
             var id = $(this).attr('data-id');
             console.log(id);
             $.ajax({
-                url: '<?= site_url($menu['url']); ?>/getKriteriaById/' + id,
+                url: '<?= site_url($menu['url']); ?>/getBobotById/' + id,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
                     console.log(response);
-                    $('input[name="kriteria_id"]').val(response.kriteria_id);
-                    $('input[name="kriteria_nm"]').val(response.kriteria_nm);
-                    $('input[name="kriteria_kode"]').val(response.kriteria_kode);
+                    is_between(response.is_between);
+                    $('input[name="bobot_id"]').val(response.bobot_id);
+                    $('select[name="kriteria_id"]').val(response.kriteria_id);
+                    $('select[name="is_between"]').val(response.is_between);
+                    $('input[name="operator"]').val(response.operator);
+                    $('input[name="sub_kriteria1"]').val(response.sub_kriteria1);
+                    $('input[name="sub_kriteria2"]').val(response.sub_kriteria2);
+                    $('input[name="nilai_bobot"]').val(response.nilai_bobot);
+
                 }
             })
         });
         // update data user
-        $('#update_kriteria').on('submit', function(event) {
+        $('#update_bobot').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: '<?= site_url($menu['url']); ?>/updateKriteria',
+                url: '<?= site_url($menu['url']); ?>/updateBobot',
                 type: 'POST',
                 data: $(this).serialize(),
                 dataType: "JSON",
                 success: function(data) {
                     if (data.error) {
                         console.log(data.error);
-                        if (data.kriteria_nm_error != '') {
-                            $('#kriteria_nm_error').html(data.kriteria_nm_error);
-                            $('#kriteria_kode_error').html(data.kriteria_kode_error);
+                        if (data.kriteria_id_error != '') {
+                            $('#kriteria_id_error').html(data.kriteria_id_error);
+                            $('#is_between_error').html(data.is_between_error);
+                            $('#operator_error').html(data.operator_error);
+                            $('#sub_kriteria1_error').html(data.sub_kriteria1_error);
+                            $('#sub_kriteria2_error').html(data.sub_kriteria2_error);
+                            $('#nilai_bobot_error').html(data.nilai_bobot_error);
                         }
                     }
                     if (data.success) {
@@ -251,7 +296,7 @@
                 var id = $(this).attr('data-id');
                 console.log(id);
                 $.ajax({
-                    url: '<?= site_url($menu['url']); ?>/deleteKriteria/' + id,
+                    url: '<?= site_url($menu['url']); ?>/deleteBobot/' + id,
                     type: 'GET',
                     success: function(response) {
                         location.reload();
@@ -279,4 +324,19 @@
         });
 
     });
+
+    function is_between(data) {
+        console.log('va');
+        console.log(data);
+
+        if (data == 1) {
+            $('#box-operator-edit').addClass('d-none');
+            $('#sub-kriteria1-edit').removeClass('d-none');
+            $('#sub-kriteria2-edit').removeClass('d-none');
+        } else {
+            $('#box-operator-edit').removeClass('d-none');
+            $('#sub-kriteria1-edit').removeClass('d-none');
+            $('#sub-kriteria2-edit').addClass('d-none');
+        }
+    }
 </script>
