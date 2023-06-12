@@ -26,6 +26,67 @@ class Franchise extends MY_Controller
 	public function index()
 	{
 		$data['menu'] = $this->menu;
+		$data['main'] = $this->m_franchise->list_data();
 		$this->render('dashboard/franchise/index', $data);
+	}
+	public function savePerhitungan()
+	{
+		$this->form_validation->set_rules('perhitungan_nm', 'Nama Perhitungan', 'required');
+		$this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+
+		if ($this->form_validation->run()) {
+			$data = [
+				'success' => 1,
+
+			];
+			// save data
+			$this->m_franchise->save_perhitungan();
+			// mengembalikan dalam bentuk json
+			echo json_encode($data);
+		} else {
+			// validasi 
+			$data = [
+				'error' => true,
+				'perhitungan_nm_error' => form_error('perhitungan_nm'),
+				'tanggal_error' => form_error('tanggal'),
+
+			];
+			echo json_encode($data);
+		}
+	}
+	public function getPerhitunganById($id)
+	{
+		$data = $this->m_franchise->getPerhitunganById($id);
+		echo json_encode($data);
+	}
+	public function updatePerhitungan()
+	{
+		$this->form_validation->set_rules('perhitungan_nm', 'Nama Perhitungan', 'required');
+		$this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
+
+		if ($this->form_validation->run()) {
+			$data = [
+				'success' => 1,
+
+			];
+			// save data
+			$this->m_franchise->save_perhitungan();
+			// mengembalikan dalam bentuk json
+			echo json_encode($data);
+		} else {
+			// validasi 
+			$data = [
+				'error' => true,
+				'perhitungan_nm_error' => form_error('perhitungan_nm'),
+				'tanggal_error' => form_error('tanggal'),
+
+			];
+			echo json_encode($data);
+		}
+	}
+	public function deletePerhitungan($id)
+	{
+		$data = $this->m_franchise->deletePerhitunganById($id);
+		echo json_encode($data);
 	}
 }

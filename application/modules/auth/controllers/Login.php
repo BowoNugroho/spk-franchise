@@ -42,6 +42,7 @@ class Login extends MY_Controller
 					$data = [
 						'username' =>  $user['username'],
 						'role_id' =>  $user['role_id'],
+						'user_id' =>  $user['user_id'],
 					];
 					$this->session->set_userdata($data);
 					if ($user['role_id'] == 1) {
