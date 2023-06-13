@@ -26,17 +26,17 @@ class M_bobot extends CI_Model
     {
         $data = $this->input->post();
         if ($data['bobot_id'] == '') {
-            $get = $this->db->order_by('bobot_id', 'DESC')->get('bobot')->row_array();
+            $get = $this->db->where('kriteria_id', $data['kriteria_id'])->order_by('bobot_id', 'DESC')->get('bobot')->row_array();
             if ($get == null) {
-                $data['bobot_id'] = date('ymd') . '0001';
+                $data['bobot_id'] = $data['kriteria_id']  . '.' .  '.0001';
             } else {
-                $tgl = substr($get['bobot_id'], 0, 6);
-                if ($tgl != date('ymd')) {
-                    $data['bobot_id'] = date('ymd') . '0001';
-                } else {
-                    $data['bobot_id'] = $get['bobot_id'] + 1;
-                }
+                $explode = explode('.', $get['bobot_id']);
+                $plus = date('ymd') . $explode[1];
+                $id =   $plus + '1';
+                $replace = substr($id, 6);
+                $data['bobot_id'] = $data['kriteria_id'] . '.' .  $replace;
             }
+            
             $this->db->insert('bobot', $data);
         } else {
             $this->db->where('bobot_id', $data['bobot_id'])->update('bobot', $data);

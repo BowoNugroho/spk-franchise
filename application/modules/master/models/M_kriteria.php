@@ -27,14 +27,11 @@ class M_kriteria extends CI_Model
         if ($data['kriteria_id'] == '') {
             $get = $this->db->order_by('kriteria_id', 'DESC')->get('kriteria')->row_array();
             if ($get == null) {
-                $data['kriteria_id'] = date('ymd') . '0001';
+                $data['kriteria_id'] = '0001';
             } else {
-                $tgl = substr($get['kriteria_id'], 0, 6);
-                if ($tgl != date('ymd')) {
-                    $data['kriteria_id'] = date('ymd') . '0001';
-                } else {
-                    $data['kriteria_id'] = $get['kriteria_id'] + 1;
-                }
+                $dt = date('ymd') . $get['kriteria_id'];
+                $id =  $dt  + '1';
+                $data['kriteria_id'] = substr($id, 6);
             }
             $this->db->insert('kriteria', $data);
         } else {

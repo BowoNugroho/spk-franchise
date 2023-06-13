@@ -38,6 +38,7 @@
                                         <td class="text-left" scope="col"><?= to_date(@$m['tanggal'], '', 'date') ?></td>
                                         <td class="text-left" scope="col"><?= @$m['keterangan'] ?></td>
                                         <td class="text-center" scope="col">
+                                            <a class="btn btn-warning btn-circle btn-sm " href="<?= site_url($menu['url'] . '/form/' . @$m['perhitungan_id']) ?>"><i class="fas fa-calculator"></i></a>
                                             <a class="btn btn-primary btn-circle btn-sm btn-edit" data-toggle="modal" data-target="#editPerhitungan" data-id="<?= @$m['perhitungan_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
                                             <a class="btn btn-danger btn-circle btn-sm btn-delete" data-id="<?= @$m['perhitungan_id'] ?>"><i class="far fa-trash-alt"></i></a>
                                     </tr>
