@@ -23,9 +23,9 @@
                             <div class="col-12 ml-2">
                                 <label class="col-lg-6 col-md-5 col-form-label text-left">Nama Franchise <span class="text-danger">*</span></label>
                                 <div class="col-lg-6 col-md-4">
-                                    <input type="hidden" class="form-control" id="alternatif_id" name="alternatif_id" value="">
+                                    <input type="hidden" class="form-control" id="alternatif_id" name="alternatif_id" value="<?= @$main['alternatif_id'] ?>">
                                     <input type="hidden" class="form-control" id="perhitungan_id" name="perhitungan_id" value="<?= $id ?>">
-                                    <input type="text" class="form-control" id="franchise_nm" name="franchise_nm" value="">
+                                    <input type="text" class="form-control" id="franchise_nm" name="franchise_nm" value="<?= @$main['franchise_nm'] ?>">
                                 </div>
                                 <span class="text-danger ">
                                     <strong id="franchise_nm_error"></strong>
@@ -34,7 +34,7 @@
                             <div class="col-12 ml-2">
                                 <label class="col-lg-6 col-md-5 col-form-label text-left">Keterangan </label>
                                 <div class="col-lg-8 col-md-4">
-                                    <textarea class="form-control" name="keterangan" id="keterangan" cols="10" rows="3"></textarea>
+                                    <textarea class="form-control" name="keterangan" id="keterangan" cols="10" rows="3"><?= @$main['keterangan'] ?></textarea>
                                 </div>
                             </div>
                             <label class="col-lg-6 col-md-5 col-form-label text-left text-primary mt-3 ">Kriteria </label>
@@ -44,7 +44,7 @@
                                 Cara Pengisian Kriteria <br>
                                 <ul>
                                     <li>Untuk Harga dan Kisaran Pendapatan di tulis dengan format nominal harga misal 2000000</li>
-                                    <li>Untuk Ukuran booth bisa di tulisakan luas booth dan bsai pakai koma (,)</li>
+                                    <li>Untuk Ukuran booth bisa di tulisakan luas booth dalam satuan M2 dan bisa pakai koma (,)</li>
                                     <li>Untuk Varian Menu cukup di tulis berapa macam varian yang ada</li>
                                     <li>Untuk Fasilitas bisa di tulis kan berapa fasilitas yang di dapat, misal dapat booth dan Buku sop maka cukup di tulis 2 </li>
                                 </ul>
@@ -59,7 +59,8 @@
                             <div class="row col-6 ml-2">
                                 <label class="col-lg-4 col-md-5 col-form-label text-left">Harga Franchise<span class="text-danger">*</span></label>
                                 <div class="col-lg-6 col-md-4">
-                                    <input type="number" class="form-control" id="nilai_alternatif_harga" name="nilai_alternatif_harga" value="">
+                                    <input type="hidden" class="form-control" id="alternatifrinc_id_harga" name="alternatifrinc_id_harga" value="<?= @$main['alternatifrinc_id_harga'] ?>">
+                                    <input type="number" class="form-control" id="nilai_alternatif_harga" name="nilai_alternatif_harga" value="<?= @$main['nilai_alternatif_harga'] ?>">
                                 </div>
                                 <span class="text-danger ">
                                     <strong id="nilai_alternatif_harga_error"></strong>
@@ -68,7 +69,8 @@
                             <div class="row col-6 ml-2">
                                 <label class="col-lg-4 col-md-5 col-form-label text-left">Fasilitas yg didapat<span class="text-danger">*</span></label>
                                 <div class="col-lg-6 col-md-4">
-                                    <input type="number" class="form-control" id="nilai_alternatif_fasilitas" name="nilai_alternatif_fasilitas" value="">
+                                    <input type="hidden" class="form-control " id="alternatifrinc_id_fasilitas" name="alternatifrinc_id_fasilitas" value="<?= @$main['alternatifrinc_id_fasilitas'] ?>">
+                                    <input type="number" class="form-control " id="nilai_alternatif_fasilitas" name="nilai_alternatif_fasilitas" value="<?= @$main['nilai_alternatif_fasilitas'] ?>">
                                 </div>
                                 <span class="text-danger ">
                                     <strong id="nilai_alternatif_fasilitas_error"></strong>
@@ -79,7 +81,8 @@
                             <div class="row col-6 ml-2">
                                 <label class="col-lg-4 col-md-5 col-form-label text-left">Ukuran Booth<span class="text-danger">*</span></label>
                                 <div class="col-lg-6 col-md-4">
-                                    <input type="number" class="form-control" id="nilai_alternatif_booth" name="nilai_alternatif_booth" value="">
+                                    <input type="hidden" class="form-control" id="alternatifrinc_id_booth" name="alternatifrinc_id_booth" value="<?= @$main['alternatifrinc_id_booth'] ?>">
+                                    <input type="text" class="form-control" id="nilai_alternatif_booth" name="nilai_alternatif_booth" value="<?= @$main['nilai_alternatif_booth'] ?>">
                                 </div>
                                 <span class="text-danger ">
                                     <strong id="nilai_alternatif_booth_error"></strong>
@@ -88,7 +91,8 @@
                             <div class="row col-6 ml-2">
                                 <label class="col-lg-4 col-md-5 col-form-label text-left">Kisaran Pendapatan<span class="text-danger">*</span></label>
                                 <div class="col-lg-6 col-md-4">
-                                    <input type="number" class="form-control" id="nilai_alternatif_benefit" name="nilai_alternatif_benefit" value="">
+                                    <input type="hidden" class="form-control" id="alternatifrinc_id_benefit" name="alternatifrinc_id_benefit" value="<?= @$main['alternatifrinc_id_benefit'] ?>">
+                                    <input type="number" class="form-control" id="nilai_alternatif_benefit" name="nilai_alternatif_benefit" value="<?= @$main['nilai_alternatif_benefit'] ?>">
                                 </div>
                                 <span class="text-danger ">
                                     <strong id="nilai_alternatif_benefit_error"></strong>
@@ -99,7 +103,8 @@
                             <div class="row col-6 ml-2">
                                 <label class="col-lg-4 col-md-5 col-form-label text-left">Varian Menu<span class="text-danger">*</span></label>
                                 <div class="col-lg-6 col-md-4">
-                                    <input type="number" class="form-control" id="nilai_alternatif_varian" name="nilai_alternatif_varian" value="">
+                                    <input type="hidden" class="form-control" id="alternatifrinc_id_varian" name="alternatifrinc_id_varian" value="<?= @$main['alternatifrinc_id_varian'] ?>">
+                                    <input type="number" class="form-control" id="nilai_alternatif_varian" name="nilai_alternatif_varian" value="<?= @$main['nilai_alternatif_varian'] ?>">
                                 </div>
                                 <span class="text-danger ">
                                     <strong id="nilai_alternatif_varian_error"></strong>
@@ -128,6 +133,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+
         // is_between();
         //Save Menu
         $('#save_alternatif').on('submit', function(event) {

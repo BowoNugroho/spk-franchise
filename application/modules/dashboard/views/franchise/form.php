@@ -19,18 +19,19 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered  table-striped" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered  table-striped" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th class="text-center" scope="col">#</th>
                                     <th class="text-center" scope="col">Register</th>
                                     <th class="text-center" scope="col">Nama Franchise</th>
-                                    <th class="text-center" scope="col">Keterangan</th>
                                     <th class="text-center" scope="col">Harga</th>
                                     <th class="text-center" scope="col">Ukuran Booth</th>
                                     <th class="text-center" scope="col">Varian Menu</th>
                                     <th class="text-center" scope="col">Fasilitan</th>
                                     <th class="text-center" scope="col">Kisaran Pendapatan</th>
+                                    <th class="text-center" scope="col">Keterangan</th>
+                                    <th class="text-center" scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="table">
@@ -40,12 +41,16 @@
                                         <td class="text-center" scope="col"><?= $no++ ?></td>
                                         <td class="text-left" scope="col"><?= @$m['alternatif_id'] ?></td>
                                         <td class="text-left" scope="col"><?= @$m['franchise_nm'] ?></td>
+                                        <td class="text-left" scope="col">Rp. <?= num_id(@$m['nilai_alternatif_harga']) ?></td>
+                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_booth'] ?> M2</td>
+                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_varian'] ?> Macam</td>
+                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_fasilitas'] ?> Macam</td>
+                                        <td class="text-left" scope="col">Rp. <?= num_id(@$m['nilai_alternatif_benefit']) ?></td>
                                         <td class="text-left" scope="col"><?= @$m['keterangan'] ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_harga'] ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_booth'] ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_varian'] ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_fasilitas'] ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_benefit'] ?></td>
+                                        <td class="text-center" scope="col">
+                                            <a href="<?= site_url($menu['url']) . '/alternatif_form/' . $id . '/' . @$m['alternatif_id'] ?>" class="btn btn-primary btn-circle btn-sm btn-edit" data-id="<?= @$m['alternatif_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
+                                            <a class="btn btn-danger btn-circle btn-sm btn-delete" data-id="<?= $id ?>" data-alternatif-id="<?= @$m['alternatif_id'] ?>"><i class="far fa-trash-alt"></i></a>
+                                        </td>
                                     <?php endforeach; ?>
                             </tbody>
                         </table>
@@ -64,27 +69,33 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-    function cb_access(id) {
-        var menu_id = id;
-        var role_id = <?= ($role) ?>;
-        // console.log(menu_id);
-        // console.log(role_id);
-        $.ajax({
-            url: '<?= site_url($menu['url']); ?>/changeAccess',
-            type: 'post',
-            data: {
-                menu_id: menu_id,
-                role_id: role_id,
-            },
-            success: function() {
-                $.toast({
-                    heading: 'Sukses',
-                    text: 'Berhasil disimpan.',
-                    icon: 'success',
-                    position: 'top-right'
+    $(document).ready(function() {
+        $('.btn-delete').on('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Setelah dihapus tidak bisa di kembalikan lagi",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#eb3b5a',
+                cancelButtonColor: '#b2bec3',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal',
+                customClass: 'swal-wide'
+            }).then((result) => {
+                var id = $(this).attr('data-id');
+                var alternatif_id = $(this).attr('data-alternatif-id');
+                console.log(id);
+                $.ajax({
+                    url: '<?= site_url($menu['url']); ?>/delete_alternatif/' + id + '/' + alternatif_id,
+                    type: 'GET',
+                    success: function(response) {
+                        window.location.replace('<?= site_url($menu['url']); ?>/form/' + id);
+                    }
                 })
-                // document.location.href = '<?= site_url($menu['url']); ?>/form/' + role_id;
-            }
-        })
-    }
+
+            });
+
+        });
+    });
 </script>

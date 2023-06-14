@@ -151,3 +151,41 @@ if (!function_exists('num_id')) {
         }
     }
 }
+if (!function_exists('float_id')) {
+    function float_id($v, $s = null, $limit = 2)
+    {
+        $raw = explode('.', $v);
+        $fraction = "";
+        $fraction = (count($raw) == 2) ? "," . str_pad($raw[1], 2, '0', STR_PAD_RIGHT) : ",00";
+        $fraction = substr($fraction, 0, ($limit + 1));
+        if ($v != '') {
+            if (is_numeric($v)) {
+                $res = number_format($raw[0], 0, ",", ".");
+                if ($s != null && $raw[0] == 0)
+                    return $s;
+                else
+                    return $res . $fraction;
+            } else {
+                return $s;
+            }
+        } else {
+            return 0;
+        }
+    }
+}
+if (!function_exists('js_autonumeric')) {
+    function js_autonumeric()
+    {
+        $html = '<script>
+                 $(function() {
+                  $(".autonumeric").autoNumeric({
+                    aSep: ".",
+                    aDec: ",",
+                    vMax: "999999999999999",
+                    vMin: "0",
+                  });
+                 });
+                 </script>';
+        return $html;
+    }
+}

@@ -37,18 +37,15 @@ class Franchise extends MY_Controller
 		$data['id'] = $id;
 		$this->render('dashboard/franchise/form', $data);
 	}
-	public function alternatif_form($id)
+	public function alternatif_form($id = null, $alternatif_id = null)
 	{
 		$data['menu'] = $this->menu;
 		$data['id'] = $id;
-		// $data['main'] = $this->m_access->get_data_menu($id);
-		$data['main'] = array();
-		$data['kriteria'] = $this->m_franchise->get_kriteria();
-		$data['harga'] = $this->m_franchise->get_harga();
-		$data['booth'] = $this->m_franchise->get_booth();
-		$data['varian'] = $this->m_franchise->get_varian();
-		$data['fasilitas'] = $this->m_franchise->get_fasilitas();
-		$data['benefit'] = $this->m_franchise->get_benefit();
+		if ($alternatif_id == null) {
+			$data['main'] = array();
+		} else {
+			$data['main'] = $this->m_franchise->get_alternatif($alternatif_id);
+		}
 		$this->render('dashboard/franchise/alternatif_form', $data);
 	}
 	public function saveAlternatif()
@@ -139,6 +136,11 @@ class Franchise extends MY_Controller
 	public function deletePerhitungan($id)
 	{
 		$data = $this->m_franchise->deletePerhitunganById($id);
+		echo json_encode($data);
+	}
+	public function delete_alternatif($id = null, $alterntaif_id = null)
+	{
+		$data = $this->m_franchise->delete_alternatif($id, $alterntaif_id);
 		echo json_encode($data);
 	}
 }
