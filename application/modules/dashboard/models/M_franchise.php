@@ -51,7 +51,14 @@ class M_franchise extends CI_Model
         $this->db->where('perhitungan_id', $id);
         $this->db->delete('perhitungan');
     }
-
+    public function check($id)
+    {
+        $sql = "SELECT a.* 
+                FROM perhitungan a 
+                WHERE a.perhitungan_id = $id ";
+        $query = $this->db->query($sql);
+        return $query->row_array();
+    }
     public function list_alternatif($id)
     {
         $sql =
@@ -635,5 +642,33 @@ class M_franchise extends CI_Model
             }
         }
         return $res;
+    }
+
+    public function save_preferensi($data)
+    {
+        $data['nilai_preferensi'] = round(@$data['nilai_preferensi'], 10);
+        $this->db->where('alternatif_id', $data['alternatif_id'])->update('alternatif', $data);
+    }
+
+    public function update($perhitungan_id = '')
+    {
+        $data['status'] = '1';
+        $this->db->where('perhitungan_id', $perhitungan_id)->update('perhitungan', $data);
+    }
+
+    public function get_hasil($id)
+    {
+        // $sql = "SELECT *, FIND_IN_SET( nilai_preferensi, ( 
+        //     SELECT GROUP_CONCAT( nilai_preferensi
+        //     ORDER BY nilai_preferensi DESC )
+        //     FROM alternatif )
+        //     ) AS ranking
+        // FROM alternatif  
+        // WHERE perhitungan_id = $id";
+        $sql = "SELECT *
+        FROM alternatif  
+        WHERE perhitungan_id = $id ORDER BY nilai_preferensi DESC";
+        $query = $this->db->query($sql);
+        return $query->result_array();
     }
 }

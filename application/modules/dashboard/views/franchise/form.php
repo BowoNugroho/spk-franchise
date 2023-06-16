@@ -9,10 +9,11 @@
             <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
             <?= $this->session->flashdata('message'); ?>
             <span id="success_message"></span>
-            <a href="<?= site_url($menu['url']); ?>/index" class="btn btn-primary mb-3"><i class="fa  fa-arrow-circle-left" aria-hidden="true"></i> Kembali</a>
-            <a href="<?= site_url($menu['url']) . '/alternatif_form/' . $id ?>" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
-            <button href="" class="btn btn-success mb-3" onclick="hitung(<?= $id ?>)"><i class="fas fa-random" aria-hidden="true"></i> Hitung</button>
-
+            <a href="<?= site_url($menu['url']); ?>/index" class="btn btn-primary mb-3"><i class="fa  fa-arrow-circle-left" aria-hidden="true"></i> Kembali </a>
+            <?php if ($check['status'] == 0) : ?>
+                <a href="<?= site_url($menu['url']) . '/alternatif_form/' . $id ?>" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
+                <button href="" class="btn btn-success mb-3" onclick="hitung(<?= $id ?>)"><i class="fas fa-random" aria-hidden="true"></i> Hitung</button>
+            <?php endif; ?>
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -49,8 +50,61 @@
                                         <td class="text-left" scope="col">Rp. <?= num_id(@$m['nilai_alternatif_benefit']) ?></td>
                                         <td class="text-left" scope="col"><?= @$m['keterangan'] ?></td>
                                         <td class="text-center" scope="col">
-                                            <a href="<?= site_url($menu['url']) . '/alternatif_form/' . $id . '/' . @$m['alternatif_id'] ?>" class="btn btn-primary btn-circle btn-sm btn-edit" data-id="<?= @$m['alternatif_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
-                                            <a class="btn btn-danger btn-circle btn-sm btn-delete" data-id="<?= $id ?>" data-alternatif-id="<?= @$m['alternatif_id'] ?>"><i class="far fa-trash-alt"></i></a>
+                                            <?php if ($check['status'] == 0) : ?>
+                                                <a href="<?= site_url($menu['url']) . '/alternatif_form/' . $id . '/' . @$m['alternatif_id'] ?>" class="btn btn-primary btn-circle btn-sm btn-edit" data-id="<?= @$m['alternatif_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
+                                                <a class="btn btn-danger btn-circle btn-sm btn-delete" data-id="<?= $id ?>" data-alternatif-id="<?= @$m['alternatif_id'] ?>"><i class="far fa-trash-alt"></i></a>
+                                            <?php else : ?>
+                                                <span class="badge badge-success">Sudah Terhitung</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">HASIL DAN NILAI PREFERENSI SETIAP ALTERNATIF</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered  table-striped" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">#</th>
+                                    <th class="text-center" scope="col">Register</th>
+                                    <th class="text-center" scope="col">Nama Franchise</th>
+                                    <th class="text-center" scope="col">Nilai Preferensi</th>
+                                    <th class="text-center" scope="col">Peringkat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table">
+                                <?php $no = 1;
+                                $ranking = 1;
+                                foreach ($hasil as $m) : ?>
+                                    <?php if (@$m['ranking'] == '1') : ?>
+                                        <tr style="background-color: greenyellow;">
+                                        <?php else : ?>
+                                        <tr>
+                                        <?php endif; ?>
+                                        </tr>
+                                        <td class="text-center" scope="col"><?= $no++ ?></td>
+                                        <td class="text-left" scope="col"><?= @$m['alternatif_id'] ?></td>
+                                        <td class="text-left" scope="col"><?= @$m['franchise_nm'] ?></td>
+                                        <td class="text-left" scope="col">
+                                            <?php if (@$m['nilai_preferensi'] != null) : ?>
+                                                <?= @$m['nilai_preferensi'] ?>
+                                            <?php else : ?>
+                                                <span class="badge badge-warning">Belum Terhitung</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center" scope="col">
+                                            <?php if (@$m['nilai_preferensi'] != null) : ?>
+                                                <?= $ranking++ ?>
+                                            <?php else : ?>
+                                                <span class="badge badge-warning">Belum Teranking</span>
+                                            <?php endif; ?>
                                         </td>
                                     <?php endforeach; ?>
                             </tbody>
@@ -105,7 +159,7 @@
             url: '<?= site_url($menu['url']); ?>/hitung/' + id,
             type: 'GET',
             success: function(response) {
-                // window.location.replace('<?= site_url($menu['url']); ?>/form/' + id);
+                window.location.replace('<?= site_url($menu['url']); ?>/form/' + id);
             }
         })
     }
