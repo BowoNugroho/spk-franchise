@@ -11,6 +11,7 @@
             <span id="success_message"></span>
             <a href="<?= site_url($menu['url']); ?>/index" class="btn btn-primary mb-3"><i class="fa  fa-arrow-circle-left" aria-hidden="true"></i> Kembali</a>
             <a href="<?= site_url($menu['url']) . '/alternatif_form/' . $id ?>" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
+            <button href="" class="btn btn-success mb-3" onclick="hitung(<?= $id ?>)"><i class="fas fa-random" aria-hidden="true"></i> Hitung</button>
 
 
             <div class="card shadow mb-4">
@@ -98,4 +99,14 @@
 
         });
     });
+
+    function hitung(id) {
+        $.ajax({
+            url: '<?= site_url($menu['url']); ?>/hitung/' + id,
+            type: 'GET',
+            success: function(response) {
+                // window.location.replace('<?= site_url($menu['url']); ?>/form/' + id);
+            }
+        })
+    }
 </script>

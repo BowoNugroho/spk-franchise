@@ -52,10 +52,12 @@ class M_franchise extends CI_Model
         $this->db->delete('perhitungan');
     }
 
-    public function list_alternatif()
+    public function list_alternatif($id)
     {
-        $sql = "SELECT a.* 
-                FROM alternatif a  ";
+        $sql =
+            "SELECT a.* 
+                FROM alternatif a 
+                WHERE a.perhitungan_id = $id";
         $query = $this->db->query($sql);
         $res = $query->result_array();
         foreach ($res as $key => $row) {
@@ -206,7 +208,7 @@ class M_franchise extends CI_Model
 
         return $list;
     }
-    public function get_alternatif($alternatif_id = '')
+    public function get_nilai_alternatif($alternatif_id = '')
     {
         $sql = "SELECT a.* 
         FROM alternatif a  
@@ -552,5 +554,86 @@ class M_franchise extends CI_Model
             $this->db->where('alternatif_id', $alternatif_id);
             $this->db->delete('alternatif_rinc');
         }
+    }
+
+    // Perhitungan metode topsis
+    public function get_alternatif($perhitungan_id)
+    {
+        $sql = "SELECT a.* 
+                FROM alternatif a  
+                WHERE a.perhitungan_id = $perhitungan_id ";
+        $query = $this->db->query($sql);
+        $res = $query->result_array();
+        foreach ($res as $key => $row) {
+            $harga = $this->db->query(
+                "SELECT a.*
+                    FROM alternatif_rinc a
+                    WHERE a.alternatif_id = '" . $row['alternatif_id'] . "' AND a.kriteria_nm = 'Harga'"
+            )->row_array();
+            if ($harga == null) {
+                $res[$key]['nilai_alternatif_harga'] = null;
+                $res[$key]['nilai_bobot_harga'] = null;
+            } else {
+                $res[$key]['nilai_alternatif_harga'] = $harga['nilai_alternatif'];
+                $res[$key]['nilai_bobot_harga'] = $harga['nilai_bobot'];
+            }
+        }
+        foreach ($res as $key => $row) {
+            $booth = $this->db->query(
+                "SELECT a.*
+                    FROM alternatif_rinc a
+                    WHERE a.alternatif_id = '" . $row['alternatif_id'] . "' AND a.kriteria_nm = 'Ukuran Booth'"
+            )->row_array();
+            if ($booth == null) {
+                $res[$key]['nilai_alternatif_booth'] = null;
+                $res[$key]['nilai_bobot_booth'] = null;
+            } else {
+                $res[$key]['nilai_alternatif_booth'] = $booth['nilai_alternatif'];
+                $res[$key]['nilai_bobot_booth'] = $booth['nilai_bobot'];
+            }
+        }
+        foreach ($res as $key => $row) {
+            $varian = $this->db->query(
+                "SELECT a.*
+                    FROM alternatif_rinc a
+                    WHERE a.alternatif_id = '" . $row['alternatif_id'] . "' AND a.kriteria_nm = 'Varian Menu'"
+            )->row_array();
+            if ($varian == null) {
+                $res[$key]['nilai_alternatif_varian'] = null;
+                $res[$key]['nilai_bobot_varian'] = null;
+            } else {
+                $res[$key]['nilai_alternatif_varian'] = $varian['nilai_alternatif'];
+                $res[$key]['nilai_bobot_varian'] = $varian['nilai_bobot'];
+            }
+        }
+        foreach ($res as $key => $row) {
+            $fasilitas = $this->db->query(
+                "SELECT a.*
+                    FROM alternatif_rinc a
+                    WHERE a.alternatif_id = '" . $row['alternatif_id'] . "' AND a.kriteria_nm = 'Fasilitas'"
+            )->row_array();
+            if ($fasilitas == null) {
+                $res[$key]['nilai_alternatif_fasilitas'] = null;
+                $res[$key]['nilai_bobot_fasilitas'] = null;
+            } else {
+                $res[$key]['nilai_alternatif_fasilitas'] = $fasilitas['nilai_alternatif'];
+                $res[$key]['nilai_bobot_fasilitas'] = $fasilitas['nilai_bobot'];
+            }
+        }
+        foreach ($res as $key => $row) {
+            $benefit = $this->db->query(
+                "SELECT a.*
+                    FROM alternatif_rinc a
+                    WHERE a.alternatif_id = '" . $row['alternatif_id'] . "' AND a.kriteria_nm = 'Kisaran Pendapatan'"
+            )->row_array();
+            if ($benefit == null) {
+                $res[$key]['nilai_alternatif_benefit'] = null;
+                $res[$key]['nilai_bobot_benefit'] = null;
+            } else {
+                $res[$key]['nilai_alternatif_benefit'] = $benefit['nilai_alternatif'];
+                $res[$key]['nilai_bobot_benefit'] = $benefit['nilai_bobot'];
+            }
+        }
+        return $res;
     }
 }

@@ -33,7 +33,7 @@ class Franchise extends MY_Controller
 	{
 		$data['menu'] = $this->menu;
 		// $data['main'] = $this->m_access->get_data_menu($id);
-		$data['main'] = $this->m_franchise->list_alternatif();
+		$data['main'] = $this->m_franchise->list_alternatif($id);
 		$data['id'] = $id;
 		$this->render('dashboard/franchise/form', $data);
 	}
@@ -142,5 +142,48 @@ class Franchise extends MY_Controller
 	{
 		$data = $this->m_franchise->delete_alternatif($id, $alterntaif_id);
 		echo json_encode($data);
+	}
+
+	public function hitung($perhitungan_id)
+	{
+		$alternatif = $this->m_franchise->get_alternatif($perhitungan_id);
+		$harga2 = 0;
+		$booth2 = 0;
+		$varian2 = 0;
+		$fasilitas2 = 0;
+		$benefit2 = 0;
+		foreach ($alternatif as $row) {
+			$harga = $row['nilai_bobot_harga'];
+			$booth = $row['nilai_bobot_booth'];
+			$varian = $row['nilai_bobot_varian'];
+			$fasilitas = $row['nilai_bobot_fasilitas'];
+			$benefit = $row['nilai_bobot_benefit'];
+			//
+			$harga1 = pow($harga, 2);
+			$booth1 = pow($booth, 2);
+			$varian1 = pow($varian, 2);
+			$fasilitas1 = pow($fasilitas, 2);
+			$benefit1 = pow($benefit, 2);
+			//
+			$harga2 += $harga1;
+			$booth2 += $booth1;
+			$varian2 += $varian1;
+			$fasilitas2 += $fasilitas1;
+			$benefit2 += $benefit1;
+			//
+			$hasil_harga = sqrt($harga2);
+			$hasil_booth = sqrt($booth2);
+			$hasil_varian = sqrt($varian2);
+			$hasil_fasilitas = sqrt($fasilitas2);
+			$hasil_benefit = sqrt($benefit2);
+		}
+
+		// var_dump($harga2);
+		var_dump($hasil_harga);
+		var_dump($hasil_booth);
+		var_dump($hasil_varian);
+		var_dump($hasil_fasilitas);
+		var_dump($hasil_benefit);
+		die;
 	}
 }
