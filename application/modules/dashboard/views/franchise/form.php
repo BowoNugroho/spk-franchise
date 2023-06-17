@@ -13,6 +13,8 @@
             <?php if ($check['status'] == 0) : ?>
                 <a href="<?= site_url($menu['url']) . '/alternatif_form/' . $id ?>" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                 <button href="" class="btn btn-success mb-3" onclick="hitung(<?= $id ?>)"><i class="fas fa-random" aria-hidden="true"></i> Hitung</button>
+            <?php else : ?>
+                <a class="btn btn-xs  btn-info mb-3" href="<?= site_url($menu['url']) . '/cetak/' . $id  ?>" data-toggle="tooltip" data-placement="top" data-custom-class="tooltip-default" title=""><i class="fa fa-print"> Cetak</i></a>
             <?php endif; ?>
 
             <div class="card shadow mb-4">

@@ -345,6 +345,24 @@ class Franchise extends MY_Controller
 			$this->m_franchise->save_preferensi($finis);
 			$this->m_franchise->update($perhitungan_id);
 		}
-		
+	}
+
+	public function cetak($id)
+	{
+		ini_set("memory_limit", "-1");
+		$data['main'] = $this->m_franchise->list_alternatif($id);
+		$data['hasil'] = $this->m_franchise->get_hasil($id);
+		// UI ========================
+		$pdfFilePath = 'Cetak.pdf';
+		$this->load->file(APPPATH . 'libraries/mpdf/mpdf.php');
+		// $pdf = new mPDF("en-GB-x", array(210, 165), "", "", 10, 10, 10, 10, 10, 10, "P");
+		$pdf = new mPDF("en-GB-x", array(210, 297), "", "", 10, 10, 10, 10, 10, 10, "P"); //A4
+		$pdf->cacheTables = true;
+		$pdf->simpleTables = true;
+		$pdf->packTableData = true;
+		$html = $this->load->view('dashboard/franchise/cetak', $data, true);
+		$pdf->WriteHTML($html);
+		$pdf->Output($pdfFilePath, "I");
+		// /.UI ======================
 	}
 }
