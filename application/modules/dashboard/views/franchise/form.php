@@ -65,55 +65,218 @@
                     </div>
                 </div>
             </div>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">HASIL DAN NILAI PREFERENSI SETIAP ALTERNATIF</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered  table-striped" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th class="text-center" scope="col">#</th>
-                                    <th class="text-center" scope="col">Register</th>
-                                    <th class="text-center" scope="col">Nama Franchise</th>
-                                    <th class="text-center" scope="col">Nilai Preferensi</th>
-                                    <th class="text-center" scope="col">Peringkat</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table">
-                                <?php $no = 1;
-                                $ranking = 1;
-                                foreach ($hasil as $m) : ?>
-                                    <?php if (@$m['ranking'] == '1') : ?>
-                                        <tr style="background-color: greenyellow;">
-                                        <?php else : ?>
+            <?php if ($check['status'] == 1) : ?>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">HASIL PERHITUNGAN ALTERNATIF DENGAN METODE TOPSIS</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <h6 class="text-primary pb-2 mb-2">
+                                A. Menentukan Nilai Konversi Setiap Alternatif
+                            </h6>
+                            <table class="table table-bordered  table-striped" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col">#</th>
+                                        <th class="text-center" scope="col">C1</th>
+                                        <th class="text-center" scope="col">C2</th>
+                                        <th class="text-center" scope="col">C3</th>
+                                        <th class="text-center" scope="col">C4</th>
+                                        <th class="text-center" scope="col">C5</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $A = 1;
+                                    foreach ($main as $m) : ?>
                                         <tr>
-                                        <?php endif; ?>
+                                            <td class="text-center" scope="col">A<?= $A++ ?></td>
+                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_harga'] ?> </td>
+                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_booth'] ?> </td>
+                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_varian'] ?> </td>
+                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_fasilitas'] ?> </td>
+                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_benefit'] ?> </td>
                                         </tr>
-                                        <td class="text-center" scope="col"><?= $no++ ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['alternatif_id'] ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['franchise_nm'] ?></td>
-                                        <td class="text-left" scope="col">
-                                            <?php if (@$m['nilai_preferensi'] != null) : ?>
-                                                <?= @$m['nilai_preferensi'] ?>
-                                            <?php else : ?>
-                                                <span class="badge badge-warning">Belum Terhitung</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="text-center" scope="col">
-                                            <?php if (@$m['nilai_preferensi'] != null) : ?>
-                                                <?= $ranking++ ?>
-                                            <?php else : ?>
-                                                <span class="badge badge-warning">Belum Teranking</span>
-                                            <?php endif; ?>
-                                        </td>
                                     <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                            <h6 class="text-primary pb-2 mb-2">
+                                B. Menentukan nilai bobot dari kriteria
+                            </h6>
+                            <table class=" table-bordered table-striped mb-3">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" width="300px">Kriteria</th>
+                                        <th class="text-center" width="300px">Bobot</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $A = 1;
+                                    foreach ($kriteria as $k) : ?>
+                                        <tr>
+                                            <td class="text-left" width="300px">&nbsp;&nbsp;<?= @$k['kriteria_nm'] ?></td>
+                                            <td class="text-center" width="300px">
+                                                <?php if (@$k['kriteria_nm'] == 'Harga') : ?>
+                                                    30%
+                                                <?php elseif (@$k['kriteria_nm'] == 'Ukuran Booth') : ?>
+                                                    20%
+                                                <?php elseif (@$k['kriteria_nm'] == 'Varian Menu') : ?>
+                                                    15%
+                                                <?php elseif (@$k['kriteria_nm'] == 'Fasilitas') : ?>
+                                                    15%
+                                                <?php elseif (@$k['kriteria_nm'] == 'Kisaran Pendapatan') : ?>
+                                                    20%
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <h6 class="text-primary pb-2 mb-2">
+                                C. Membuat Matrik keputusan yang Ternormalisasi
+                            </h6>
+                            <table class=" table-bordered table-striped mb-3" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col">#</th>
+                                        <th class="text-center" scope="col">C1</th>
+                                        <th class="text-center" scope="col">C2</th>
+                                        <th class="text-center" scope="col">C3</th>
+                                        <th class="text-center" scope="col">C4</th>
+                                        <th class="text-center" scope="col">C5</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $b = 1;
+                                    foreach ($ternormalisasi as $k) : ?>
+                                        <tr>
+                                            <td class="text-center" scope="col">A<?= $b++ ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['harga'] ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['booth'] ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['varian'] ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['fasilitas'] ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['benefit'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <h6 class="text-primary pb-2 mb-2">
+                                D. Membuat Matrik keputusan yang ternormalisasi terbobot
+                            </h6>
+                            <table class=" table-bordered table-striped mb-3" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col">#</th>
+                                        <th class="text-center" scope="col">C1</th>
+                                        <th class="text-center" scope="col">C2</th>
+                                        <th class="text-center" scope="col">C3</th>
+                                        <th class="text-center" scope="col">C4</th>
+                                        <th class="text-center" scope="col">C5</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $b = 1;
+                                    foreach ($ternormalisasi_terbobot as $k) : ?>
+                                        <tr>
+                                            <td class="text-center" scope="col">A<?= $b++ ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['harga'] ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['booth'] ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['varian'] ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['fasilitas'] ?></td>
+                                            <td class="text-center" width="300px"><?= @$k['benefit'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <h6 class="text-primary pb-2 mb-2">
+                                E. Menentukan matrik solusi idea positif A+ dan idea negatif A-
+                            </h6>
+                            <table class=" table-bordered table-striped mb-3" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col">A+</th>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a+']['harga'] ?></td>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a+']['booth'] ?></td>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a+']['varian'] ?></td>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a+']['fasilitas'] ?></td>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a+']['benefit'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" scope="col">A-</th>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a-']['harga'] ?></td>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a-']['booth'] ?></td>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a-']['varian'] ?></td>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a-']['fasilitas'] ?></td>
+                                        <td class="text-center" scope="col"><?= @$solusi_idea['a-']['benefit'] ?></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <h6 class="text-primary pb-2 mb-2">
+                                F. Menentukan D+ dan D- Setiap Alternatif
+                            </h6>
+                            <table class=" table-bordered table-striped mb-3" width="100%">
+                                <tbody>
+                                    <?php $a = 1;
+                                    $b = 1;
+                                    foreach ($nilaid as $k) : ?>
+                                        <tr>
+                                        <tr>
+                                            <td class="text-center" scope="col">D<?= $a++ ?>+</td>
+                                            <td class="text-center" scope="col"><?= @$k['dplus'] ?></td>
+                                            <td class="text-center" scope="col"></td>
+                                            <td class="text-center" scope="col">D<?= $b++ ?>-</td>
+                                            <td class="text-center" scope="col"><?= @$k['dmines'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <h6 class="text-primary pb-2 mb-2">
+                                G. Nilai preferensi untuk setiap alternatif
+                            </h6>
+                            <table class="table table-bordered  table-striped" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col">#</th>
+                                        <th class="text-center" scope="col">Register</th>
+                                        <th class="text-center" scope="col">Nama Franchise</th>
+                                        <th class="text-center" scope="col">Nilai Preferensi</th>
+                                        <th class="text-center" scope="col">Peringkat</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table">
+                                    <?php $no = 1;
+                                    $ranking = 1;
+                                    foreach ($hasil as $m) : ?>
+                                        <?php if (@$m['ranking'] == '1') : ?>
+                                            <tr style="background-color: greenyellow;">
+                                            <?php else : ?>
+                                            <tr>
+                                            <?php endif; ?>
+                                            </tr>
+                                            <td class="text-center" scope="col"><?= $no++ ?></td>
+                                            <td class="text-left" scope="col"><?= @$m['alternatif_id'] ?></td>
+                                            <td class="text-left" scope="col"><?= @$m['franchise_nm'] ?></td>
+                                            <td class="text-left" scope="col">
+                                                <?php if (@$m['nilai_preferensi'] != null) : ?>
+                                                    <?= @$m['nilai_preferensi'] ?>
+                                                <?php else : ?>
+                                                    <span class="badge badge-warning">Belum Terhitung</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="text-center" scope="col">
+                                                <?php if (@$m['nilai_preferensi'] != null) : ?>
+                                                    <?= $ranking++ ?>
+                                                <?php else : ?>
+                                                    <span class="badge badge-warning">Belum Teranking</span>
+                                                <?php endif; ?>
+                                            </td>
+                                        <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
 

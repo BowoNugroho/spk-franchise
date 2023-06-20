@@ -35,6 +35,11 @@ class Franchise extends MY_Controller
 		$data['check'] = $this->m_franchise->check($id);
 		$data['main'] = $this->m_franchise->list_alternatif($id);
 		$data['hasil'] = $this->m_franchise->get_hasil($id);
+		$data['kriteria'] = $this->m_franchise->get_kriteria2();
+		$data['ternormalisasi'] = $this->m_franchise->ternormalisasi($id);
+		$data['ternormalisasi_terbobot'] = $this->m_franchise->ternormalisasi_terbobot($id);
+		$data['solusi_idea'] = $this->m_franchise->solusi_idea($id);
+		$data['nilaid'] = $this->m_franchise->nilaid($id);
 		$data['id'] = $id;
 		$this->render('dashboard/franchise/form', $data);
 	}
@@ -162,11 +167,11 @@ class Franchise extends MY_Controller
 		$fasilitas2 = 0;
 		$benefit2 = 0;
 		foreach ($alternatif as $row) {
-			$harga = $row['nilai_alternatif_harga'];
-			$booth = str_replace(',', '.', $row['nilai_alternatif_booth']);
-			$varian = $row['nilai_alternatif_varian'];
-			$fasilitas = $row['nilai_alternatif_fasilitas'];
-			$benefit = $row['nilai_alternatif_benefit'];
+			$harga = $row['nilai_bobot_harga'];
+			$booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+			$varian = $row['nilai_bobot_varian'];
+			$fasilitas = $row['nilai_bobot_fasilitas'];
+			$benefit = $row['nilai_bobot_benefit'];
 			//
 			$harga1 = pow($harga, 2);
 			$booth1 = pow($booth, 2);
@@ -189,11 +194,11 @@ class Franchise extends MY_Controller
 
 
 		foreach ($alternatif as $row) {
-			$harga = $row['nilai_alternatif_harga'];
-			$booth = str_replace(',', '.', $row['nilai_alternatif_booth']);
-			$varian = $row['nilai_alternatif_varian'];
-			$fasilitas = $row['nilai_alternatif_fasilitas'];
-			$benefit = $row['nilai_alternatif_benefit'];
+			$harga = $row['nilai_bobot_harga'];
+			$booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+			$varian = $row['nilai_bobot_varian'];
+			$fasilitas = $row['nilai_bobot_fasilitas'];
+			$benefit = $row['nilai_bobot_benefit'];
 
 			//  Membuat Matrik keputusan yang Ternormalisasi -> T1
 			$t1_harga = $harga / $pembagi_harga;
@@ -307,11 +312,11 @@ class Franchise extends MY_Controller
 
 		// Menentukan D+ dan D- Setiap Alternatif
 		foreach ($alternatif as $row) {
-			$harga = $row['nilai_alternatif_harga'];
-			$booth = str_replace(',', '.', $row['nilai_alternatif_booth']);
-			$varian = $row['nilai_alternatif_varian'];
-			$fasilitas = $row['nilai_alternatif_fasilitas'];
-			$benefit = $row['nilai_alternatif_benefit'];
+			$harga = $row['nilai_bobot_harga'];
+			$booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+			$varian = $row['nilai_bobot_varian'];
+			$fasilitas = $row['nilai_bobot_fasilitas'];
+			$benefit = $row['nilai_bobot_benefit'];
 
 			//  Membuat Matrik keputusan yang Ternormalisasi -> T1.2
 			$t1_harga2 = $harga / $pembagi_harga;

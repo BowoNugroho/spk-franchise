@@ -38,6 +38,516 @@ class M_franchise extends CI_Model
             $this->db->where('perhitungan_id', $data['perhitungan_id'])->update('perhitungan', $data);
         }
     }
+    public function get_kriteria2()
+    {
+        $sql = "SELECT a.* 
+        FROM kriteria a  ";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    public function ternormalisasi($perhitungan_id = null)
+    {
+        $alternatif = $this->m_franchise->get_alternatif($perhitungan_id);
+        // Mencari Pembagi untuk tahab Matrik keputusan yang Ternormalisasi
+        $harga2 = 0;
+        $booth2 = 0;
+        $varian2 = 0;
+        $fasilitas2 = 0;
+        $benefit2 = 0;
+        foreach ($alternatif as $row) {
+            $harga = $row['nilai_bobot_harga'];
+            $booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+            $varian = $row['nilai_bobot_varian'];
+            $fasilitas = $row['nilai_bobot_fasilitas'];
+            $benefit = $row['nilai_bobot_benefit'];
+            //
+            $harga1 = pow($harga, 2);
+            $booth1 = pow($booth, 2);
+            $varian1 = pow($varian, 2);
+            $fasilitas1 = pow($fasilitas, 2);
+            $benefit1 = pow($benefit, 2);
+            //
+            $harga2 += $harga1;
+            $booth2 += $booth1;
+            $varian2 += $varian1;
+            $fasilitas2 += $fasilitas1;
+            $benefit2 += $benefit1;
+            //
+            $pembagi_harga = sqrt($harga2);
+            $pembagi_booth = sqrt($booth2);
+            $pembagi_varian = sqrt($varian2);
+            $pembagi_fasilitas = sqrt($fasilitas2);
+            $pembagi_benefit = sqrt($benefit2);
+        }
+        foreach ($alternatif as $row) {
+            $harga = $row['nilai_bobot_harga'];
+            $booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+            $varian = $row['nilai_bobot_varian'];
+            $fasilitas = $row['nilai_bobot_fasilitas'];
+            $benefit = $row['nilai_bobot_benefit'];
+
+            //  Membuat Matrik keputusan yang Ternormalisasi -> T1
+            $t1_harga = $harga / $pembagi_harga;
+            $t1_booth = $booth / $pembagi_booth;
+            $t1_varian = $varian / $pembagi_varian;
+            $t1_fasilitas = $fasilitas / $pembagi_fasilitas;
+            $t1_benefit = $benefit / $pembagi_benefit;
+
+
+            $hasil[] = array(
+                "harga" => $t1_harga,
+                "booth" => $t1_booth,
+                "varian" => $t1_varian,
+                "fasilitas" => $t1_fasilitas,
+                "benefit" => $t1_benefit,
+            );
+        }
+        return $hasil;
+    }
+    public function ternormalisasi_terbobot($perhitungan_id = null)
+    {
+        $alternatif = $this->m_franchise->get_alternatif($perhitungan_id);
+
+        // bobot setiap kriteria dalam bentuk presentasi yang di konversi ke desimal
+        $bobot_harga = 0.3;
+        $bobot_booth = 0.2;
+        $bobot_varian = 0.15;
+        $bobot_fasilitas = 0.15;
+        $bobot_benefit = 0.2;
+        // Mencari Pembagi untuk tahab Matrik keputusan yang Ternormalisasi
+        $harga2 = 0;
+        $booth2 = 0;
+        $varian2 = 0;
+        $fasilitas2 = 0;
+        $benefit2 = 0;
+        foreach ($alternatif as $row) {
+            $harga = $row['nilai_bobot_harga'];
+            $booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+            $varian = $row['nilai_bobot_varian'];
+            $fasilitas = $row['nilai_bobot_fasilitas'];
+            $benefit = $row['nilai_bobot_benefit'];
+            //
+            $harga1 = pow($harga, 2);
+            $booth1 = pow($booth, 2);
+            $varian1 = pow($varian, 2);
+            $fasilitas1 = pow($fasilitas, 2);
+            $benefit1 = pow($benefit, 2);
+            //
+            $harga2 += $harga1;
+            $booth2 += $booth1;
+            $varian2 += $varian1;
+            $fasilitas2 += $fasilitas1;
+            $benefit2 += $benefit1;
+            //
+            $pembagi_harga = sqrt($harga2);
+            $pembagi_booth = sqrt($booth2);
+            $pembagi_varian = sqrt($varian2);
+            $pembagi_fasilitas = sqrt($fasilitas2);
+            $pembagi_benefit = sqrt($benefit2);
+        }
+
+
+        foreach ($alternatif as $row) {
+            $harga = $row['nilai_bobot_harga'];
+            $booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+            $varian = $row['nilai_bobot_varian'];
+            $fasilitas = $row['nilai_bobot_fasilitas'];
+            $benefit = $row['nilai_bobot_benefit'];
+
+            //  Membuat Matrik keputusan yang Ternormalisasi -> T1
+            $t1_harga = $harga / $pembagi_harga;
+            $t1_booth = $booth / $pembagi_booth;
+            $t1_varian = $varian / $pembagi_varian;
+            $t1_fasilitas = $fasilitas / $pembagi_fasilitas;
+            $t1_benefit = $benefit / $pembagi_benefit;
+
+            // Membuat Matrik keputusan yang ternormalisasi terbobot -> T2
+
+            $t2_harga  = $t1_harga * $bobot_harga;
+            $t2_booth  = $t1_booth * $bobot_booth;
+            $t2_varian  = $t1_varian * $bobot_varian;
+            $t2_fasilitas = $t1_fasilitas * $bobot_fasilitas;
+            $t2_benefit = $t1_benefit * $bobot_benefit;
+
+            $hasil[] = array(
+                "harga" => $t2_harga,
+                "booth" => $t2_booth,
+                "varian" => $t2_varian,
+                "fasilitas" => $t2_fasilitas,
+                "benefit" => $t2_benefit,
+            );
+        }
+        return $hasil;
+    }
+    public function solusi_idea($perhitungan_id =  null)
+    {
+        $alternatif = $this->m_franchise->get_alternatif($perhitungan_id);
+
+        // bobot setiap kriteria dalam bentuk presentasi yang di konversi ke desimal
+        $bobot_harga = 0.3;
+        $bobot_booth = 0.2;
+        $bobot_varian = 0.15;
+        $bobot_fasilitas = 0.15;
+        $bobot_benefit = 0.2;
+        // Mencari Pembagi untuk tahab Matrik keputusan yang Ternormalisasi
+        $harga2 = 0;
+        $booth2 = 0;
+        $varian2 = 0;
+        $fasilitas2 = 0;
+        $benefit2 = 0;
+        foreach ($alternatif as $row) {
+            $harga = $row['nilai_bobot_harga'];
+            $booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+            $varian = $row['nilai_bobot_varian'];
+            $fasilitas = $row['nilai_bobot_fasilitas'];
+            $benefit = $row['nilai_bobot_benefit'];
+            //
+            $harga1 = pow($harga, 2);
+            $booth1 = pow($booth, 2);
+            $varian1 = pow($varian, 2);
+            $fasilitas1 = pow($fasilitas, 2);
+            $benefit1 = pow($benefit, 2);
+            //
+            $harga2 += $harga1;
+            $booth2 += $booth1;
+            $varian2 += $varian1;
+            $fasilitas2 += $fasilitas1;
+            $benefit2 += $benefit1;
+            //
+            $pembagi_harga = sqrt($harga2);
+            $pembagi_booth = sqrt($booth2);
+            $pembagi_varian = sqrt($varian2);
+            $pembagi_fasilitas = sqrt($fasilitas2);
+            $pembagi_benefit = sqrt($benefit2);
+        }
+
+
+        foreach ($alternatif as $row) {
+            $harga = $row['nilai_bobot_harga'];
+            $booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+            $varian = $row['nilai_bobot_varian'];
+            $fasilitas = $row['nilai_bobot_fasilitas'];
+            $benefit = $row['nilai_bobot_benefit'];
+
+            //  Membuat Matrik keputusan yang Ternormalisasi -> T1
+            $t1_harga = $harga / $pembagi_harga;
+            $t1_booth = $booth / $pembagi_booth;
+            $t1_varian = $varian / $pembagi_varian;
+            $t1_fasilitas = $fasilitas / $pembagi_fasilitas;
+            $t1_benefit = $benefit / $pembagi_benefit;
+
+            // Membuat Matrik keputusan yang ternormalisasi terbobot -> T2
+
+            $t2_harga  = $t1_harga * $bobot_harga;
+            $t2_booth  = $t1_booth * $bobot_booth;
+            $t2_varian  = $t1_varian * $bobot_varian;
+            $t2_fasilitas = $t1_fasilitas * $bobot_fasilitas;
+            $t2_benefit = $t1_benefit * $bobot_benefit;
+
+            // Menentukan matrik solusi idea positif A+ dan idea negatif A- -> T3 , T4 , T5
+
+            $t3_harga[] = $t2_harga;
+            $t3_booth[] = $t2_booth;
+            $t3_varian[] = $t2_varian;
+            $t3_fasilitas[] = $t2_fasilitas;
+            $t3_benefit[] = $t2_benefit;
+
+            $t4_harga = array(
+                "harga" => $t3_harga,
+                "atribut" => 'Cost',
+            );
+            $t4_booth = array(
+                "booth" => $t3_booth,
+                "atribut" => 'Benefit',
+            );
+            $t4_varian = array(
+                "varian" => $t3_varian,
+                "atribut" => 'Benefit',
+            );
+            $t4_fasilitas = array(
+                "fasilitas" => $t3_fasilitas,
+                "atribut" => 'Benefit',
+            );
+            $t4_benefit = array(
+                "benefit" => $t3_benefit,
+                "atribut" => 'Benefit',
+            );
+        }
+
+        // Menentukan matrik solusi idea positif A+
+        if ($t4_harga['atribut'] == 'Benefit') {
+            $t5_harga = max($t4_harga['harga']);
+        } else {
+            $t5_harga = min($t4_harga['harga']);
+        }
+        //
+        if ($t4_booth['atribut'] == 'Benefit') {
+            $t5_booth = max($t4_booth['booth']);
+        } else {
+            $t5_booth = min($t4_booth['booth']);
+        }
+        //
+        if ($t4_varian['atribut'] == 'Benefit') {
+            $t5_varian = max($t4_varian['varian']);
+        } else {
+            $t5_varian = min($t4_varian['varian']);
+        }
+        //
+        if ($t4_fasilitas['atribut'] == 'Benefit') {
+            $t5_fasilitas = max($t4_fasilitas['fasilitas']);
+        } else {
+            $t5_fasilitas = min($t4_fasilitas['fasilitas']);
+        }
+        //
+        if ($t4_benefit['atribut'] == 'Benefit') {
+            $t5_benefit = max($t4_benefit['benefit']);
+        } else {
+            $t5_benefit = min($t4_benefit['benefit']);
+        }
+
+
+        // Menentukan matrik solusi idea positif A-
+        if ($t4_harga['atribut'] == 'Benefit') {
+            $t6_harga = min($t4_harga['harga']);
+        } else {
+            $t6_harga = max($t4_harga['harga']);
+        }
+        //
+        if ($t4_booth['atribut'] == 'Benefit') {
+            $t6_booth = min($t4_booth['booth']);
+        } else {
+            $t6_booth = max($t4_booth['booth']);
+        }
+        //
+        if ($t4_varian['atribut'] == 'Benefit') {
+            $t6_varian = min($t4_varian['varian']);
+        } else {
+            $t6_varian = max($t4_varian['varian']);
+        }
+        //
+        if ($t4_fasilitas['atribut'] == 'Benefit') {
+            $t6_fasilitas = min($t4_fasilitas['fasilitas']);
+        } else {
+            $t6_fasilitas = max($t4_fasilitas['fasilitas']);
+        }
+        //
+        if ($t4_benefit['atribut'] == 'Benefit') {
+            $t6_benefit = min($t4_benefit['benefit']);
+        } else {
+            $t6_benefit = max($t4_benefit['benefit']);
+        }
+
+        $hasil['a+'] = array(
+            "harga" => $t5_harga,
+            "booth" => $t5_booth,
+            "varian" => $t5_varian,
+            "fasilitas" => $t5_fasilitas,
+            "benefit" => $t5_benefit,
+        );
+        $hasil['a-'] = array(
+            "harga" => $t6_harga,
+            "booth" => $t6_booth,
+            "varian" => $t6_varian,
+            "fasilitas" => $t6_fasilitas,
+            "benefit" => $t6_benefit,
+        );
+        return $hasil;
+    }
+    public function nilaid($perhitungan_id = null)
+    {
+        $alternatif = $this->m_franchise->get_alternatif($perhitungan_id);
+
+        // bobot setiap kriteria dalam bentuk presentasi yang di konversi ke desimal
+        $bobot_harga = 0.3;
+        $bobot_booth = 0.2;
+        $bobot_varian = 0.15;
+        $bobot_fasilitas = 0.15;
+        $bobot_benefit = 0.2;
+        // Mencari Pembagi untuk tahab Matrik keputusan yang Ternormalisasi
+        $harga2 = 0;
+        $booth2 = 0;
+        $varian2 = 0;
+        $fasilitas2 = 0;
+        $benefit2 = 0;
+        foreach ($alternatif as $row) {
+            $harga = $row['nilai_bobot_harga'];
+            $booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+            $varian = $row['nilai_bobot_varian'];
+            $fasilitas = $row['nilai_bobot_fasilitas'];
+            $benefit = $row['nilai_bobot_benefit'];
+            //
+            $harga1 = pow($harga, 2);
+            $booth1 = pow($booth, 2);
+            $varian1 = pow($varian, 2);
+            $fasilitas1 = pow($fasilitas, 2);
+            $benefit1 = pow($benefit, 2);
+            //
+            $harga2 += $harga1;
+            $booth2 += $booth1;
+            $varian2 += $varian1;
+            $fasilitas2 += $fasilitas1;
+            $benefit2 += $benefit1;
+            //
+            $pembagi_harga = sqrt($harga2);
+            $pembagi_booth = sqrt($booth2);
+            $pembagi_varian = sqrt($varian2);
+            $pembagi_fasilitas = sqrt($fasilitas2);
+            $pembagi_benefit = sqrt($benefit2);
+        }
+
+
+        foreach ($alternatif as $row) {
+            $harga = $row['nilai_bobot_harga'];
+            $booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+            $varian = $row['nilai_bobot_varian'];
+            $fasilitas = $row['nilai_bobot_fasilitas'];
+            $benefit = $row['nilai_bobot_benefit'];
+
+            //  Membuat Matrik keputusan yang Ternormalisasi -> T1
+            $t1_harga = $harga / $pembagi_harga;
+            $t1_booth = $booth / $pembagi_booth;
+            $t1_varian = $varian / $pembagi_varian;
+            $t1_fasilitas = $fasilitas / $pembagi_fasilitas;
+            $t1_benefit = $benefit / $pembagi_benefit;
+
+            // Membuat Matrik keputusan yang ternormalisasi terbobot -> T2
+
+            $t2_harga  = $t1_harga * $bobot_harga;
+            $t2_booth  = $t1_booth * $bobot_booth;
+            $t2_varian  = $t1_varian * $bobot_varian;
+            $t2_fasilitas = $t1_fasilitas * $bobot_fasilitas;
+            $t2_benefit = $t1_benefit * $bobot_benefit;
+
+            // Menentukan matrik solusi idea positif A+ dan idea negatif A- -> T3 , T4 , T5
+
+            $t3_harga[] = $t2_harga;
+            $t3_booth[] = $t2_booth;
+            $t3_varian[] = $t2_varian;
+            $t3_fasilitas[] = $t2_fasilitas;
+            $t3_benefit[] = $t2_benefit;
+
+            $t4_harga = array(
+                "harga" => $t3_harga,
+                "atribut" => 'Cost',
+            );
+            $t4_booth = array(
+                "booth" => $t3_booth,
+                "atribut" => 'Benefit',
+            );
+            $t4_varian = array(
+                "varian" => $t3_varian,
+                "atribut" => 'Benefit',
+            );
+            $t4_fasilitas = array(
+                "fasilitas" => $t3_fasilitas,
+                "atribut" => 'Benefit',
+            );
+            $t4_benefit = array(
+                "benefit" => $t3_benefit,
+                "atribut" => 'Benefit',
+            );
+        }
+
+        // Menentukan matrik solusi idea positif A+
+        if ($t4_harga['atribut'] == 'Benefit') {
+            $t5_harga = max($t4_harga['harga']);
+        } else {
+            $t5_harga = min($t4_harga['harga']);
+        }
+        //
+        if ($t4_booth['atribut'] == 'Benefit') {
+            $t5_booth = max($t4_booth['booth']);
+        } else {
+            $t5_booth = min($t4_booth['booth']);
+        }
+        //
+        if ($t4_varian['atribut'] == 'Benefit') {
+            $t5_varian = max($t4_varian['varian']);
+        } else {
+            $t5_varian = min($t4_varian['varian']);
+        }
+        //
+        if ($t4_fasilitas['atribut'] == 'Benefit') {
+            $t5_fasilitas = max($t4_fasilitas['fasilitas']);
+        } else {
+            $t5_fasilitas = min($t4_fasilitas['fasilitas']);
+        }
+        //
+        if ($t4_benefit['atribut'] == 'Benefit') {
+            $t5_benefit = max($t4_benefit['benefit']);
+        } else {
+            $t5_benefit = min($t4_benefit['benefit']);
+        }
+
+
+
+        // Menentukan matrik solusi idea positif A-
+        if ($t4_harga['atribut'] == 'Benefit') {
+            $t6_harga = min($t4_harga['harga']);
+        } else {
+            $t6_harga = max($t4_harga['harga']);
+        }
+        //
+        if ($t4_booth['atribut'] == 'Benefit') {
+            $t6_booth = min($t4_booth['booth']);
+        } else {
+            $t6_booth = max($t4_booth['booth']);
+        }
+        //
+        if ($t4_varian['atribut'] == 'Benefit') {
+            $t6_varian = min($t4_varian['varian']);
+        } else {
+            $t6_varian = max($t4_varian['varian']);
+        }
+        //
+        if ($t4_fasilitas['atribut'] == 'Benefit') {
+            $t6_fasilitas = min($t4_fasilitas['fasilitas']);
+        } else {
+            $t6_fasilitas = max($t4_fasilitas['fasilitas']);
+        }
+        //
+        if ($t4_benefit['atribut'] == 'Benefit') {
+            $t6_benefit = min($t4_benefit['benefit']);
+        } else {
+            $t6_benefit = max($t4_benefit['benefit']);
+        }
+
+
+        // Menentukan D+ dan D- Setiap Alternatif
+        foreach ($alternatif as $row) {
+            $harga = $row['nilai_bobot_harga'];
+            $booth = str_replace(',', '.', $row['nilai_bobot_booth']);
+            $varian = $row['nilai_bobot_varian'];
+            $fasilitas = $row['nilai_bobot_fasilitas'];
+            $benefit = $row['nilai_bobot_benefit'];
+
+            //  Membuat Matrik keputusan yang Ternormalisasi -> T1.2
+            $t1_harga2 = $harga / $pembagi_harga;
+            $t1_booth2 = $booth / $pembagi_booth;
+            $t1_varian2 = $varian / $pembagi_varian;
+            $t1_fasilitas2 = $fasilitas / $pembagi_fasilitas;
+            $t1_benefit2 = $benefit / $pembagi_benefit;
+
+            // Membuat Matrik keputusan yang ternormalisasi terbobot -> T2.2
+
+            $t2_harga2  = $t1_harga2 * $bobot_harga;
+            $t2_booth2  = $t1_booth2 * $bobot_booth;
+            $t2_varian2  = $t1_varian2 * $bobot_varian;
+            $t2_fasilitas2 = $t1_fasilitas2 * $bobot_fasilitas;
+            $t2_benefit2 = $t1_benefit2 * $bobot_benefit;
+
+            // Menentukan D+
+            $t7_dplus = sqrt(pow(($t5_harga - $t2_harga2), 2) + pow(($t5_booth - $t2_booth2), 2) + pow(($t5_varian - $t2_varian2), 2) + pow(($t5_fasilitas - $t2_fasilitas2), 2) + pow(($t5_benefit - $t2_benefit2), 2));
+            // Menentukan D-
+            $t7_dmines = sqrt(pow(($t6_harga - $t2_harga2), 2) + pow(($t6_booth - $t2_booth2), 2) + pow(($t6_varian - $t2_varian2), 2) + pow(($t6_fasilitas - $t2_fasilitas2), 2) + pow(($t6_benefit - $t2_benefit2), 2));
+
+            $hasil[] = array(
+                "dplus" => $t7_dplus,
+                "dmines" => $t7_dmines,
+            );
+        }
+        return $hasil;
+    }
     public function getPerhitunganById($id = '')
     {
         $sql = "SELECT a.* 
