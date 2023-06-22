@@ -1090,9 +1090,11 @@ class M_franchise extends CI_Model
             if ($harga == null) {
                 $res[$key]['nilai_alternatif_harga'] = null;
                 $res[$key]['nilai_bobot_harga'] = null;
+                $res[$key]['alternatifrinc_id_harga'] = null;
             } else {
                 $res[$key]['nilai_alternatif_harga'] = $harga['nilai_alternatif'];
                 $res[$key]['nilai_bobot_harga'] = $harga['nilai_bobot'];
+                $res[$key]['alternatifrinc_id_harga'] = $harga['alternatifrinc_id'];
             }
         }
         foreach ($res as $key => $row) {
@@ -1104,9 +1106,11 @@ class M_franchise extends CI_Model
             if ($booth == null) {
                 $res[$key]['nilai_alternatif_booth'] = null;
                 $res[$key]['nilai_bobot_booth'] = null;
+                $res[$key]['alternatifrinc_id_booth'] = null;
             } else {
                 $res[$key]['nilai_alternatif_booth'] = $booth['nilai_alternatif'];
                 $res[$key]['nilai_bobot_booth'] = $booth['nilai_bobot'];
+                $res[$key]['alternatifrinc_id_booth'] = $booth['alternatifrinc_id'];
             }
         }
         foreach ($res as $key => $row) {
@@ -1118,9 +1122,11 @@ class M_franchise extends CI_Model
             if ($varian == null) {
                 $res[$key]['nilai_alternatif_varian'] = null;
                 $res[$key]['nilai_bobot_varian'] = null;
+                $res[$key]['alternatifrinc_id_varian'] = null;
             } else {
                 $res[$key]['nilai_alternatif_varian'] = $varian['nilai_alternatif'];
                 $res[$key]['nilai_bobot_varian'] = $varian['nilai_bobot'];
+                $res[$key]['alternatifrinc_id_varian'] = $varian['alternatifrinc_id'];
             }
         }
         foreach ($res as $key => $row) {
@@ -1132,9 +1138,11 @@ class M_franchise extends CI_Model
             if ($fasilitas == null) {
                 $res[$key]['nilai_alternatif_fasilitas'] = null;
                 $res[$key]['nilai_bobot_fasilitas'] = null;
+                $res[$key]['alternatifrinc_id_fasilitas'] = null;
             } else {
                 $res[$key]['nilai_alternatif_fasilitas'] = $fasilitas['nilai_alternatif'];
                 $res[$key]['nilai_bobot_fasilitas'] = $fasilitas['nilai_bobot'];
+                $res[$key]['alternatifrinc_id_fasilitas'] = $fasilitas['alternatifrinc_id'];
             }
         }
         foreach ($res as $key => $row) {
@@ -1146,9 +1154,11 @@ class M_franchise extends CI_Model
             if ($benefit == null) {
                 $res[$key]['nilai_alternatif_benefit'] = null;
                 $res[$key]['nilai_bobot_benefit'] = null;
+                $res[$key]['alternatifrinc_id_benefit'] = null;
             } else {
                 $res[$key]['nilai_alternatif_benefit'] = $benefit['nilai_alternatif'];
                 $res[$key]['nilai_bobot_benefit'] = $benefit['nilai_bobot'];
+                $res[$key]['alternatifrinc_id_benefit'] = $benefit['alternatifrinc_id'];
             }
         }
         return $res;

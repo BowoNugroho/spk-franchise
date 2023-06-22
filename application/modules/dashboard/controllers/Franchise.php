@@ -50,14 +50,22 @@ class Franchise extends MY_Controller
 		if ($alternatif_id == null) {
 			$data['main'] = array();
 		} else {
-			$data['main'] = $this->m_franchise->get_alternatif($alternatif_id);
+			$data['main'] = $this->m_franchise->get_nilai_alternatif($alternatif_id);
 		}
+		// echo "<pre>";
+		// var_dump($data['main']);
+		// die;
 		$this->render('dashboard/franchise/alternatif_form', $data);
 	}
 	public function saveAlternatif()
 	{
 		$data = $this->input->post();
 		$this->form_validation->set_rules('franchise_nm', 'Nama Franchise', 'required');
+		$this->form_validation->set_rules('nilai_alternatif_harga', 'Harga Franchise', 'required');
+		$this->form_validation->set_rules('nilai_alternatif_booth', 'Booth Franchise', 'required');
+		$this->form_validation->set_rules('nilai_alternatif_varian', 'Varian Menu', 'required');
+		$this->form_validation->set_rules('nilai_alternatif_fasilitas', 'Fasilitas ', 'required');
+		$this->form_validation->set_rules('nilai_alternatif_benefit', ' Kisaran Pendapatan', 'required');
 
 		if ($this->form_validation->run()) {
 			$data = [
@@ -75,6 +83,11 @@ class Franchise extends MY_Controller
 			$data = [
 				'error' => true,
 				'franchise_nm_error' => form_error('franchise_nm'),
+				'nilai_alternatif_harga_error' => form_error('nilai_alternatif_harga'),
+				'nilai_alternatif_fasilitas_error' => form_error('nilai_alternatif_fasilitas'),
+				'nilai_alternatif_booth_error' => form_error('nilai_alternatif_booth'),
+				'nilai_alternatif_benefit_error' => form_error('nilai_alternatif_benefit'),
+				'nilai_alternatif_varian_error' => form_error('nilai_alternatif_varian'),
 				// 'tanggal_error' => form_error('tanggal'),
 
 			];

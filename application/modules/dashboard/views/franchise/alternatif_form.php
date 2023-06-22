@@ -26,10 +26,10 @@
                                     <input type="hidden" class="form-control" id="alternatif_id" name="alternatif_id" value="<?= @$main['alternatif_id'] ?>">
                                     <input type="hidden" class="form-control" id="perhitungan_id" name="perhitungan_id" value="<?= $id ?>">
                                     <input type="text" class="form-control" id="franchise_nm" name="franchise_nm" value="<?= @$main['franchise_nm'] ?>">
+                                    <span class="text-danger ">
+                                        <strong id="franchise_nm_error"></strong>
+                                    </span>
                                 </div>
-                                <span class="text-danger ">
-                                    <strong id="franchise_nm_error"></strong>
-                                </span>
                             </div>
                             <div class="col-12 ml-2">
                                 <label class="col-lg-6 col-md-5 col-form-label text-left">Keterangan </label>
@@ -61,20 +61,20 @@
                                 <div class="col-lg-6 col-md-4">
                                     <input type="hidden" class="form-control" id="alternatifrinc_id_harga" name="alternatifrinc_id_harga" value="<?= @$main['alternatifrinc_id_harga'] ?>">
                                     <input type="number" class="form-control" id="nilai_alternatif_harga" name="nilai_alternatif_harga" value="<?= @$main['nilai_alternatif_harga'] ?>">
+                                    <span class="text-danger ">
+                                        <strong id="nilai_alternatif_harga_error"></strong>
+                                    </span>
                                 </div>
-                                <span class="text-danger ">
-                                    <strong id="nilai_alternatif_harga_error"></strong>
-                                </span>
                             </div>
                             <div class="row col-6 ml-2">
                                 <label class="col-lg-4 col-md-5 col-form-label text-left">Fasilitas yg didapat<span class="text-danger">*</span></label>
                                 <div class="col-lg-6 col-md-4">
                                     <input type="hidden" class="form-control " id="alternatifrinc_id_fasilitas" name="alternatifrinc_id_fasilitas" value="<?= @$main['alternatifrinc_id_fasilitas'] ?>">
                                     <input type="number" class="form-control " id="nilai_alternatif_fasilitas" name="nilai_alternatif_fasilitas" value="<?= @$main['nilai_alternatif_fasilitas'] ?>">
+                                    <span class="text-danger ">
+                                        <strong id="nilai_alternatif_fasilitas_error"></strong>
+                                    </span>
                                 </div>
-                                <span class="text-danger ">
-                                    <strong id="nilai_alternatif_fasilitas_error"></strong>
-                                </span>
                             </div>
                         </div>
                         <div class="row col-12 mt-3">
@@ -83,20 +83,20 @@
                                 <div class="col-lg-6 col-md-4">
                                     <input type="hidden" class="form-control" id="alternatifrinc_id_booth" name="alternatifrinc_id_booth" value="<?= @$main['alternatifrinc_id_booth'] ?>">
                                     <input type="text" class="form-control" id="nilai_alternatif_booth" name="nilai_alternatif_booth" value="<?= @$main['nilai_alternatif_booth'] ?>">
+                                    <span class="text-danger ">
+                                        <strong id="nilai_alternatif_booth_error"></strong>
+                                    </span>
                                 </div>
-                                <span class="text-danger ">
-                                    <strong id="nilai_alternatif_booth_error"></strong>
-                                </span>
                             </div>
                             <div class="row col-6 ml-2">
                                 <label class="col-lg-4 col-md-5 col-form-label text-left">Kisaran Pendapatan<span class="text-danger">*</span></label>
                                 <div class="col-lg-6 col-md-4">
                                     <input type="hidden" class="form-control" id="alternatifrinc_id_benefit" name="alternatifrinc_id_benefit" value="<?= @$main['alternatifrinc_id_benefit'] ?>">
                                     <input type="number" class="form-control" id="nilai_alternatif_benefit" name="nilai_alternatif_benefit" value="<?= @$main['nilai_alternatif_benefit'] ?>">
+                                    <span class="text-danger ">
+                                        <strong id="nilai_alternatif_benefit_error"></strong>
+                                    </span>
                                 </div>
-                                <span class="text-danger ">
-                                    <strong id="nilai_alternatif_benefit_error"></strong>
-                                </span>
                             </div>
                         </div>
                         <div class="row col-12 mt-3">
@@ -105,10 +105,10 @@
                                 <div class="col-lg-6 col-md-4">
                                     <input type="hidden" class="form-control" id="alternatifrinc_id_varian" name="alternatifrinc_id_varian" value="<?= @$main['alternatifrinc_id_varian'] ?>">
                                     <input type="number" class="form-control" id="nilai_alternatif_varian" name="nilai_alternatif_varian" value="<?= @$main['nilai_alternatif_varian'] ?>">
+                                    <span class="text-danger ">
+                                        <strong id="nilai_alternatif_varian_error"></strong>
+                                    </span>
                                 </div>
-                                <span class="text-danger ">
-                                    <strong id="nilai_alternatif_varian_error"></strong>
-                                </span>
                             </div>
                         </div>
                         <div class="row ml-3 mt-3">

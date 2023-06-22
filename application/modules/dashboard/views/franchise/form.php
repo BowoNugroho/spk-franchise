@@ -38,29 +38,37 @@
                                     <th class="text-center" scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="table">
-                                <?php $no = 1;
-                                foreach ($main as $m) : ?>
+                            <?php if (@$main == null) : ?>
+                                <tbody id="table">
                                     <tr>
-                                        <td class="text-center" scope="col"><?= $no++ ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['alternatif_id'] ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['franchise_nm'] ?></td>
-                                        <td class="text-left" scope="col">Rp. <?= num_id(@$m['nilai_alternatif_harga']) ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_booth'] ?> M2</td>
-                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_varian'] ?> Macam</td>
-                                        <td class="text-left" scope="col"><?= @$m['nilai_alternatif_fasilitas'] ?> Macam</td>
-                                        <td class="text-left" scope="col">Rp. <?= num_id(@$m['nilai_alternatif_benefit']) ?></td>
-                                        <td class="text-left" scope="col"><?= @$m['keterangan'] ?></td>
-                                        <td class="text-center" scope="col">
-                                            <?php if ($check['status'] == 0) : ?>
-                                                <a href="<?= site_url($menu['url']) . '/alternatif_form/' . $id . '/' . @$m['alternatif_id'] ?>" class="btn btn-primary btn-circle btn-sm btn-edit" data-id="<?= @$m['alternatif_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
-                                                <a class="btn btn-danger btn-circle btn-sm btn-delete" data-id="<?= $id ?>" data-alternatif-id="<?= @$m['alternatif_id'] ?>"><i class="far fa-trash-alt"></i></a>
-                                            <?php else : ?>
-                                                <span class="badge badge-success">Sudah Terhitung</span>
-                                            <?php endif; ?>
-                                        </td>
-                                    <?php endforeach; ?>
-                            </tbody>
+                                        <td colspan="10" class="text-center"><i>Tidak ada data....</i></td>
+                                    </tr>
+                                </tbody>
+                            <?php else : ?>
+                                <tbody id="table">
+                                    <?php $no = 1;
+                                    foreach ($main as $m) : ?>
+                                        <tr>
+                                            <td class="text-center" scope="col"><?= $no++ ?></td>
+                                            <td class="text-left" scope="col"><?= @$m['alternatif_id'] ?></td>
+                                            <td class="text-left" scope="col"><?= @$m['franchise_nm'] ?></td>
+                                            <td class="text-left" scope="col">Rp. <?= num_id(@$m['nilai_alternatif_harga']) ?></td>
+                                            <td class="text-left" scope="col"><?= @$m['nilai_alternatif_booth'] ?> M2</td>
+                                            <td class="text-left" scope="col"><?= @$m['nilai_alternatif_varian'] ?> Macam</td>
+                                            <td class="text-left" scope="col"><?= @$m['nilai_alternatif_fasilitas'] ?> Macam</td>
+                                            <td class="text-left" scope="col">Rp. <?= num_id(@$m['nilai_alternatif_benefit']) ?></td>
+                                            <td class="text-left" scope="col"><?= @$m['keterangan'] ?></td>
+                                            <td class="text-center" scope="col">
+                                                <?php if ($check['status'] == 0) : ?>
+                                                    <a href="<?= site_url($menu['url']) . '/alternatif_form/' . $id . '/' . @$m['alternatif_id'] ?>" class="btn btn-primary btn-circle btn-sm btn-edit" data-id="<?= @$m['alternatif_id'] ?>"><i class="fas fa-pencil-alt"></i></a>
+                                                    <a class="btn btn-danger btn-circle btn-sm btn-delete" data-id="<?= $id ?>" data-alternatif-id="<?= @$m['alternatif_id'] ?>"><i class="far fa-trash-alt"></i></a>
+                                                <?php else : ?>
+                                                    <span class="badge badge-success">Sudah Terhitung</span>
+                                                <?php endif; ?>
+                                            </td>
+                                        <?php endforeach; ?>
+                                </tbody>
+                            <?php endif; ?>
                         </table>
                     </div>
                 </div>
@@ -75,27 +83,27 @@
                             <h6 class="text-primary pb-2 mb-2">
                                 A. Menentukan Nilai Konversi Setiap Alternatif
                             </h6>
-                            <table class="table table-bordered  table-striped" width="100%" cellspacing="0">
+                            <table class=" table-bordered  table-striped mb-3" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" scope="col">#</th>
-                                        <th class="text-center" scope="col">C1</th>
-                                        <th class="text-center" scope="col">C2</th>
-                                        <th class="text-center" scope="col">C3</th>
-                                        <th class="text-center" scope="col">C4</th>
-                                        <th class="text-center" scope="col">C5</th>
+                                        <th class="text-center" width="100px">#</th>
+                                        <th class="text-center">C1</th>
+                                        <th class="text-center">C2</th>
+                                        <th class="text-center">C3</th>
+                                        <th class="text-center">C4</th>
+                                        <th class="text-center">C5</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $A = 1;
                                     foreach ($main as $m) : ?>
                                         <tr>
-                                            <td class="text-center" scope="col">A<?= $A++ ?></td>
-                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_harga'] ?> </td>
-                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_booth'] ?> </td>
-                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_varian'] ?> </td>
-                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_fasilitas'] ?> </td>
-                                            <td class="text-center" scope="col"><?= @$m['nilai_bobot_benefit'] ?> </td>
+                                            <td class="text-center">A<?= $A++ ?></td>
+                                            <td class="text-center"><?= @$m['nilai_bobot_harga'] ?> </td>
+                                            <td class="text-center"><?= @$m['nilai_bobot_booth'] ?> </td>
+                                            <td class="text-center"><?= @$m['nilai_bobot_varian'] ?> </td>
+                                            <td class="text-center"><?= @$m['nilai_bobot_fasilitas'] ?> </td>
+                                            <td class="text-center"><?= @$m['nilai_bobot_benefit'] ?> </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -233,7 +241,7 @@
                             <h6 class="text-primary pb-2 mb-2">
                                 G. Nilai preferensi untuk setiap alternatif
                             </h6>
-                            <table class="table table-bordered  table-striped" width="100%" cellspacing="0">
+                            <table class=" table-bordered  table-striped" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th class="text-center" scope="col">#</th>
